@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "industrialreborn",
+  "version": "${version}",
+  "name": "IndustrialReborn",
+  "description": "Addon for TechReborn - inspired by EnderIO & Industrial Foregoing",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/danie/IndustrialReborn"
+  },
+  "license": "MIT",
+  "icon": "assets/industrialreborn/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.munchii.industrialreborn.client.IndustrialRebornClient"
+    ],
+    "main": [
+      "me.munchii.industrialreborn.IndustrialReborn"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
