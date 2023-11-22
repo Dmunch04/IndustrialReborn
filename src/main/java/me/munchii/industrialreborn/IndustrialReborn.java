@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import reborncore.common.config.Configuration;
 
 public class IndustrialReborn implements ModInitializer {
-    // TODO: make recipes
     // TODO: make new animation for powered spawner because the current looks cursed
 
     public static final String MOD_ID = "industrialreborn";
