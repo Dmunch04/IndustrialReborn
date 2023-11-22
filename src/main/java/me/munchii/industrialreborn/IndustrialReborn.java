@@ -8,7 +8,7 @@ import reborncore.common.config.Configuration;
 
 public class IndustrialReborn implements ModInitializer {
     // TODO: make recipes
-    // TODO: test the powered spawner on/active animation (at frametime 2 it was way too fast, it looked weird)
+    // TODO: make new animation for powered spawner because the current looks cursed
 
     public static final String MOD_ID = "industrialreborn";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
