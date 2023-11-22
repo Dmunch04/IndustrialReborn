@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "industrialreborn:block/broken_spawner" }
+  }
+}

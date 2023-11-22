@@ -40,9 +40,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2YTdDnfxuZong8WBYzMgyj59638" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -50,9 +50,19 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/danie/Documents/GitHub/IndustrialReborn/src/main/resources/assets/industrialreborn/textures/block/machines"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn\textures\block\machines" />
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn" />
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\data\industrialreborn\loot_tables\blocks" />
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\data\minecraft\loot_tables\blocks" />
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn\textures\item" />
+    </key>
+  </component>
   <component name="RunManager" selected="Gradle.IndustrialReborn build">
     <configuration name="IndustrialReborn build" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
