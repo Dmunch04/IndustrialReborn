@@ -2,6 +2,7 @@ package me.munchii.industrialreborn;
 
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
+import me.munchii.industrialreborn.init.IRFluids;
 import me.munchii.industrialreborn.init.IRItemGroup;
 import me.munchii.industrialreborn.items.SoulVialItem;
 import me.munchii.industrialreborn.utils.Resources;
@@ -18,6 +19,7 @@ public class RegistryManager {
     public static void register() {
         registerBlocks();
         registerItems();
+        registerFluids();
 
         IRBlockEntities.init();
         IRItemGroup.register();
@@ -33,6 +35,10 @@ public class RegistryManager {
     private static void registerItems() {
         IRContent.EMPTY_SOUL_VIAL = registerItem("empty_soul_vial", new SoulVialItem(false));
         IRContent.FILLED_SOUL_VIAL = registerItem("filled_soul_vial", new SoulVialItem(true));
+    }
+
+    private static void registerFluids() {
+        Arrays.stream(IRFluids.values()).forEach(IRFluids::register);
     }
 
     private static <I extends Item> I registerItem(String name, I item) {
