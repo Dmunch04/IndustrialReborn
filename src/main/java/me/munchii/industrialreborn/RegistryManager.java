@@ -26,7 +26,8 @@ public class RegistryManager {
     private static void registerBlocks() {
         Arrays.stream(IRContent.Machine.values()).forEach(value -> registerBlock(value.name, value.block));
 
-        IRContent.BROKEN_SPAWNER = registerBlock("broken_spawner", new Block(TRBlockSettings.machine()));
+        // TODO: i'm still not happy with how the broken spawner looks because the edges are see through and you can't see the backsides through it
+        IRContent.BROKEN_SPAWNER = registerBlock("broken_spawner", new Block(TRBlockSettings.machine().nonOpaque()));
     }
 
     private static void registerItems() {

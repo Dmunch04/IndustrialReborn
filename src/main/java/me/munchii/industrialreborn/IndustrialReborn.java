@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import reborncore.common.config.Configuration;
 
 public class IndustrialReborn implements ModInitializer {
-    // TODO: make the broken spawner transparent
     // TODO: make recipes
     // TODO: test the powered spawner on/active animation (at frametime 2 it was way too fast, it looked weird)
 
@@ -19,5 +18,7 @@ public class IndustrialReborn implements ModInitializer {
         new Configuration(IndustrialRebornConfig.class, MOD_ID);
 
         RegistryManager.register();
+
+        LOGGER.info("IndustrialReborn initialized");
     }
 }
