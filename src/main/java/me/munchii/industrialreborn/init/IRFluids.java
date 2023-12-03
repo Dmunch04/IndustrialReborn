@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.init;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.utils.Resources;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -45,6 +46,7 @@ public enum IRFluids implements ItemConvertible {
         RebornFluidManager.register(flowingFluid, Resources.id(identifier.getPath() + "_flowing"));
 
         Registry.register(Registries.BLOCK, identifier, block);
+        // TODO: bucket not registering? Resources.id(identifier.getPath() + "_bucket")=industrialreborn:essence_bucket
         Registry.register(Registries.ITEM, Resources.id(identifier.getPath() + "_bucket"), bucket);
     }
 
