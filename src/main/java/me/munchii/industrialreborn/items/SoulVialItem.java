@@ -1,12 +1,13 @@
 package me.munchii.industrialreborn.items;
 
 import me.munchii.industrialreborn.IndustrialReborn;
-import me.munchii.industrialreborn.core.store.StoreItem;
+import me.munchii.industrialreborn.core.store.item.StoreItem;
 import me.munchii.industrialreborn.core.store.StoreProvider;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.init.IRStores;
 import me.munchii.industrialreborn.store.test.ITestStore;
 import me.munchii.industrialreborn.store.test.TestStoreItemStack;
+import me.munchii.industrialreborn.store.test2.Test2StoreItemStack;
 import me.munchii.industrialreborn.utils.EntityCaptureUtils;
 import me.munchii.industrialreborn.utils.EntityStorageNBTHelper;
 import net.minecraft.client.item.TooltipContext;
@@ -50,6 +51,8 @@ public class SoulVialItem extends StoreItem {
             return ActionResult.FAIL;
         }
 
+        ItemStack oStack = stack;
+        this.stack = context.getStack();
         if (hasStoredEntity()) {
             IndustrialReborn.LOGGER.warn("BBBBBBBBB1");
             getStore(IRStores.TEST_STORE).ifPresent(store -> {
@@ -63,6 +66,7 @@ public class SoulVialItem extends StoreItem {
                 store.setStoredString("YEEEET");
             });
         }
+        this.stack = oStack;
 
         return releaseEntity(context.getWorld(), context.getStack(), context.getBlockPos(), emptyVial -> player.setStackInHand(context.getHand(), emptyVial));
     }
@@ -155,6 +159,8 @@ public class SoulVialItem extends StoreItem {
         }
     }
 
+    ItemStack stack;
+
     @Override
     public void initStores(StoreProvider provider) {
         // i dont think this will work because we get the default stack, instead of the current stack?
@@ -165,7 +171,10 @@ public class SoulVialItem extends StoreItem {
         // - okay yes. it seems that using the default stack will not work. i tested it by having 2 vials. the first i right-clicked 2 times
         // to first store the string and then print. and the second i only right-clicked once. if it had worked, it should only
         // have printed "YEEEET" once, however it printed it 3 times (not sure why 3 times, should only be 2, but still indicates it doesn't work)
-        provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
+        //provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
+        stack = new ItemStack(asItem());
+        provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(stack)));
+        provider.addStore(IRStores.TEST_2_STORE, Optional.of(new Test2StoreItemStack()));
         /*
         if (IRContent.FILLED_SOUL_VIAL != null) {
             provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
@@ -182,5 +191,7 @@ public class SoulVialItem extends StoreItem {
 
     public boolean hasStoredEntity() {
         return getStore(IRStores.TEST_STORE).map(ITestStore::hasStoredString).orElse(false);
+        // ??
+        //return getStore(IRStores.TEST_2_STORE).map(ITest2Store::hasStoredString).orElse(false);
     }
 }

@@ -17,5 +17,7 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# things we don't wanna push, but might become useful for when working on something. remove afterwards
 **/bloat/
+# classes that are unfisished and can't build yet
 *.java1

@@ -1,7 +1,7 @@
 package me.munchii.industrialreborn;
 
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
-import me.munchii.industrialreborn.core.store.StoreItem;
+import me.munchii.industrialreborn.core.store.item.StoreItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.registry.Registries;
