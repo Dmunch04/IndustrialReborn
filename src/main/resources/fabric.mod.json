@@ -4,9 +4,9 @@
   "version": "${version}",
   "name": "Industrial Reborn",
   "description": "Addon for TechReborn - inspired by EnderIO & Industrial Foregoing",
-  "authors": [],
+  "authors": ["munchii"],
   "contact": {
-    "repo": "https://github.com/danie/IndustrialReborn"
+    "repo": "https://github.com/Dmunch04/IndustrialReborn"
   },
   "license": "MIT",
   "icon": "assets/industrialreborn/icon.png",

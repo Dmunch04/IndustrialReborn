@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.init;
 
+import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
 import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
 import me.munchii.industrialreborn.utils.Resources;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -23,6 +24,7 @@ public class IRBlockEntities {
     private static final List<BlockEntityType<?>> TYPES = new ArrayList<>();
 
     public static final BlockEntityType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register(PoweredSpawnerBlockEntity::new, "powered_spawner", IRContent.Machine.POWERED_SPAWNER);
+    public static final BlockEntityType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register(MobSlaughterBlockEntity::new, "mob_slaughter", IRContent.Machine.MOB_SLAUGHTER);
 
     public static <T extends BlockEntity> BlockEntityType<T> register(BiFunction<BlockPos, BlockState, T> supplier, String name, ItemConvertible... items) {
         return register(supplier, name, Arrays.stream(items).map(itemConvertible -> Block.getBlockFromItem(itemConvertible.asItem())).toArray(Block[]::new));

@@ -1,6 +1,7 @@
 package me.munchii.industrialreborn.init;
 
 import me.munchii.industrialreborn.blockentity.GuiType;
+import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
 import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,7 +19,8 @@ public class IRContent {
     public static Item FILLED_SOUL_VIAL;
 
     public enum Machine implements ItemConvertible {
-        POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new));
+        POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new)),
+        MOB_SLAUGHTER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, MobSlaughterBlockEntity::new));
 
         public final String name;
         public final Block block;
