@@ -3,7 +3,7 @@ package me.munchii.industrialreborn.blockentity;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
-import me.munchii.industrialreborn.utils.EntityStorageNBTHelper;
+import me.munchii.industrialreborn.storage.entity.EntityStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -119,7 +119,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public static boolean filledVialFilter(ItemStack stack) {
         Item item = stack.getItem();
         if (item == IRContent.FILLED_SOUL_VIAL) {
-            return EntityStorageNBTHelper.hasStoredEntity(stack);
+            return EntityStorage.hasStoredEntity(stack);
         }
 
         return false;
@@ -170,7 +170,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         }
 
         public void storeSoul(ItemStack soulVial) {
-            Optional<NbtCompound> tag = EntityStorageNBTHelper.getEntityDataCompound(soulVial);
+            Optional<NbtCompound> tag = EntityStorage.getEntityDataCompound(soulVial);
             tag.ifPresent(nbtCompound -> {
                 this.entityTag = nbtCompound;
 

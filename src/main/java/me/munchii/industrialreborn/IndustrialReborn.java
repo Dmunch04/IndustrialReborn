@@ -1,7 +1,6 @@
 package me.munchii.industrialreborn;
 
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
-import me.munchii.industrialreborn.core.store.item.StoreItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.registry.Registries;
@@ -22,13 +21,5 @@ public class IndustrialReborn implements ModInitializer {
         RegistryManager.register();
 
         LOGGER.info("IndustrialReborn initialized");
-
-        RegistryEntryAddedCallback.event(Registries.ITEM).register((rawId, id, object) -> {
-            // this doesnt work
-            if (object instanceof StoreItem storeItem) {
-                LOGGER.warn("YEEEEEEET " + storeItem.getClass().getName());
-                storeItem.initStores(storeItem.provider);
-            }
-        });
     }
 }

@@ -1,7 +1,6 @@
-package me.munchii.industrialreborn.utils;
+package me.munchii.industrialreborn.storage.entity;
 
 import me.munchii.industrialreborn.IRNBTKeys;
-import me.munchii.industrialreborn.store.entity.StoredEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -10,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
-public class EntityStorageNBTHelper {
+public class EntityStorage {
     public static final String ENTITY_KEY = "Entity";
 
     public static boolean hasStoredEntity(ItemStack stack) {

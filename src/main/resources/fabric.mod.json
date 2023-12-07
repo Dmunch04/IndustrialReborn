@@ -23,6 +23,6 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
-    "techreborn": ">=${tr_version}"
+    "techreborn": ">=1.20:5.8.7"
   }
 }

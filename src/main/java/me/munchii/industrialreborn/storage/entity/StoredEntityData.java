@@ -1,4 +1,4 @@
-package me.munchii.industrialreborn.store.entity;
+package me.munchii.industrialreborn.storage.entity;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;

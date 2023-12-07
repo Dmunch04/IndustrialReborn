@@ -1,15 +1,8 @@
 package me.munchii.industrialreborn.items;
 
-import me.munchii.industrialreborn.IndustrialReborn;
-import me.munchii.industrialreborn.core.store.item.StoreItem;
-import me.munchii.industrialreborn.core.store.StoreProvider;
 import me.munchii.industrialreborn.init.IRContent;
-import me.munchii.industrialreborn.init.IRStores;
-import me.munchii.industrialreborn.store.test.ITestStore;
-import me.munchii.industrialreborn.store.test.TestStoreItemStack;
-import me.munchii.industrialreborn.store.test2.Test2StoreItemStack;
 import me.munchii.industrialreborn.utils.EntityCaptureUtils;
-import me.munchii.industrialreborn.utils.EntityStorageNBTHelper;
+import me.munchii.industrialreborn.storage.entity.EntityStorage;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -33,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class SoulVialItem extends StoreItem {
+public class SoulVialItem extends Item {
 
     public SoulVialItem(boolean filled) {
         super(new Item.Settings().maxCount(filled ? 1 : 16));
@@ -50,23 +43,6 @@ public class SoulVialItem extends StoreItem {
         if (player == null) {
             return ActionResult.FAIL;
         }
-
-        ItemStack oStack = stack;
-        this.stack = context.getStack();
-        if (hasStoredEntity()) {
-            IndustrialReborn.LOGGER.warn("BBBBBBBBB1");
-            getStore(IRStores.TEST_STORE).ifPresent(store -> {
-                IndustrialReborn.LOGGER.warn("BBBBBBBBB2");
-                IndustrialReborn.LOGGER.info("AAAAAAAAAAAAAAAAAA " + store.getStoredString());
-            });
-        } else {
-            IndustrialReborn.LOGGER.warn("BBBBBBBBB3");
-            getStore(IRStores.TEST_STORE).ifPresent(store -> {
-                IndustrialReborn.LOGGER.warn("BBBBBBBBB4");
-                store.setStoredString("YEEEET");
-            });
-        }
-        this.stack = oStack;
 
         return releaseEntity(context.getWorld(), context.getStack(), context.getBlockPos(), emptyVial -> player.setStackInHand(context.getHand(), emptyVial));
     }
@@ -117,15 +93,15 @@ public class SoulVialItem extends StoreItem {
 
         soulVial.decrement(1);
         ItemStack filledVial = IRContent.FILLED_SOUL_VIAL.getDefaultStack();
-        EntityStorageNBTHelper.saveEntityData(filledVial, entity);
+        EntityStorage.saveEntityData(filledVial, entity);
 
         entity.discard();
         return Optional.of(filledVial);
     }
 
     private static ActionResult releaseEntity(World world, ItemStack filledVial, BlockPos pos, Consumer<ItemStack> emptyVialSetter) {
-        if (EntityStorageNBTHelper.hasStoredEntity(filledVial)) {
-            Optional<NbtCompound> entityTag = EntityStorageNBTHelper.getEntityDataCompound(filledVial);
+        if (EntityStorage.hasStoredEntity(filledVial)) {
+            Optional<NbtCompound> entityTag = EntityStorage.getEntityDataCompound(filledVial);
             if (entityTag.isEmpty()) {
                 return ActionResult.FAIL;
             }
@@ -150,48 +126,12 @@ public class SoulVialItem extends StoreItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (stack.getItem() == IRContent.FILLED_SOUL_VIAL.asItem() && EntityStorageNBTHelper.hasStoredEntity(stack)) {
-            Optional<NbtCompound> tag = EntityStorageNBTHelper.getEntityDataCompound(stack);
+        if (stack.getItem() == IRContent.FILLED_SOUL_VIAL.asItem() && EntityStorage.hasStoredEntity(stack)) {
+            Optional<NbtCompound> tag = EntityStorage.getEntityDataCompound(stack);
             tag.ifPresent(nbtCompound -> {
                 Optional<Entity> entity = EntityType.getEntityFromNbt(nbtCompound, world);
                 entity.ifPresent(ent -> tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", ent.getDisplayName().getString()).formatted(Formatting.GRAY)));
             });
         }
-    }
-
-    ItemStack stack;
-
-    @Override
-    public void initStores(StoreProvider provider) {
-        // i dont think this will work because we get the default stack, instead of the current stack?
-        // maybe we should "copy" the Forge capability way and pass around an ItemStack
-        // unsure of where it would come from: public void initStores(ItemStack stack, StoreProvider provider)
-        // where is the stack coming from. plus we cant do stack.getStore, we have to attach that function to this item class
-        // so maybe make an item store instead?
-        // - okay yes. it seems that using the default stack will not work. i tested it by having 2 vials. the first i right-clicked 2 times
-        // to first store the string and then print. and the second i only right-clicked once. if it had worked, it should only
-        // have printed "YEEEET" once, however it printed it 3 times (not sure why 3 times, should only be 2, but still indicates it doesn't work)
-        //provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
-        stack = new ItemStack(asItem());
-        provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(stack)));
-        provider.addStore(IRStores.TEST_2_STORE, Optional.of(new Test2StoreItemStack()));
-        /*
-        if (IRContent.FILLED_SOUL_VIAL != null) {
-            provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
-        }
-
-         */
-        /*
-        if (this == IRContent.FILLED_SOUL_VIAL.asItem()) {
-            provider.addStore(IRStores.TEST_STORE, Optional.of(new TestStoreItemStack(getDefaultStack())));
-        }
-
-         */
-    }
-
-    public boolean hasStoredEntity() {
-        return getStore(IRStores.TEST_STORE).map(ITestStore::hasStoredString).orElse(false);
-        // ??
-        //return getStore(IRStores.TEST_2_STORE).map(ITest2Store::hasStoredString).orElse(false);
     }
 }
