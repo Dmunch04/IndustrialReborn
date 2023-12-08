@@ -18,7 +18,7 @@ public class EntityStorage {
         }
 
         NbtCompound nbt = stack.getNbt();
-        if (!nbt.contains(IRNBTKeys.ENTITY_STORAGE)) {
+        if (nbt == null || (!nbt.contains(IRNBTKeys.ENTITY_STORAGE))) {
             return false;
         }
 
@@ -47,7 +47,13 @@ public class EntityStorage {
             return Optional.empty();
         }
 
-        return Optional.of(stack.getNbt().getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY));
+        NbtCompound entityNbt = stack.getNbt();
+
+        if (entityNbt == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY));
     }
 
     public static Optional<NbtCompound> getEntityDataCompound(ItemStack stack) {
@@ -55,7 +61,13 @@ public class EntityStorage {
             return Optional.empty();
         }
 
-        String id = stack.getNbt().getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY);
+        NbtCompound entityNbt = stack.getNbt();
+
+        if (entityNbt == null) {
+            return Optional.empty();
+        }
+
+        String id = entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY);
         return Optional.of(StoredEntityData.of(new Identifier(id)).getEntityTag());
     }
 }

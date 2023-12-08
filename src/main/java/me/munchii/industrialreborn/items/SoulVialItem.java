@@ -106,8 +106,11 @@ public class SoulVialItem extends Item {
                 return ActionResult.FAIL;
             }
 
+            // TODO: spawned mob keeps falling through the floor now for some weird reason
+            // unless y is added with 1.5 which i dont like
+            // why?
             double spawnX = pos.getX();
-            double spawnY = pos.getY() + 0.5;
+            double spawnY = pos.getY() + 1.5;
             double spawnZ = pos.getZ();
 
             Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag.get(), world);

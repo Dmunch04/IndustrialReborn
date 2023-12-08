@@ -1,6 +1,5 @@
 package me.munchii.industrialreborn.init;
 
-import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.utils.Resources;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -14,7 +13,8 @@ import techreborn.init.TRBlockSettings;
 import java.util.Locale;
 
 public enum IRFluids implements ItemConvertible {
-    ESSENCE;
+    LIQUID_EXPERIENCE,
+    SOUL_ESSENCE;
 
     private RebornFluid stillFluid;
     private RebornFluid flowingFluid;
@@ -42,11 +42,12 @@ public enum IRFluids implements ItemConvertible {
     }
 
     public void register() {
+        // TODO: for some reason our buckets isn't really registered. at least not in EMI, but they do still work, so idk
+
         RebornFluidManager.register(stillFluid, identifier);
         RebornFluidManager.register(flowingFluid, Resources.id(identifier.getPath() + "_flowing"));
 
         Registry.register(Registries.BLOCK, identifier, block);
-        // TODO: bucket not registering? Resources.id(identifier.getPath() + "_bucket")=industrialreborn:essence_bucket
         Registry.register(Registries.ITEM, Resources.id(identifier.getPath() + "_bucket"), bucket);
     }
 

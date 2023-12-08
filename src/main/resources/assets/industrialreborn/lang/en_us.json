@@ -9,5 +9,8 @@
   "item.industrialreborn.filled_soul_vial": "Soul Vial",
   "item.industrialreborn.filled_soul_vial.tooltip": "Contains the soul of %s",
 
-  "block.industrialreborn.essence": "Essence"
+  "block.industrialreborn.liquid_experience": "Liquid Experience",
+  "item.industrialreborn.liquid_experience_bucket": "Liquid Experience Bucket",
+  "block.industrialreborn.soul_essence": "Soul Essence",
+  "item.industrialreborn.soul_essence_bucket": "Soul Essence Bucket"
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "industrialreborn:item/essence_bucket"
+    "layer0": "industrialreborn:item/bucket_base"
   }
 }
