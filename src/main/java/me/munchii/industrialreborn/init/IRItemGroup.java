@@ -13,6 +13,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 
+import java.util.Arrays;
+
 public class IRItemGroup {
     private static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, Resources.id("item_group"));
 
@@ -30,6 +32,7 @@ public class IRItemGroup {
         entries.add(IRContent.BROKEN_SPAWNER);
 
         addContent(IRContent.Machine.values(), entries);
+        Arrays.stream(IRFluids.values()).forEach(value -> entries.add(value.getBucket()));
     }
 
     private static void addContent(ItemConvertible[] items, FabricItemGroupEntries entries) {

@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/IndustrialReborn.main.iml" filepath="$PROJECT_DIR$/.idea/modules/IndustrialReborn.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/IndustrialReborn.test.iml" filepath="$PROJECT_DIR$/.idea/modules/IndustrialReborn.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.munchii.IndustrialReborn.main.iml" filepath="$PROJECT_DIR$/.idea/modules/me.munchii.IndustrialReborn.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.munchii.IndustrialReborn.test.iml" filepath="$PROJECT_DIR$/.idea/modules/me.munchii.IndustrialReborn.test.iml" />
     </modules>
   </component>
 </project>

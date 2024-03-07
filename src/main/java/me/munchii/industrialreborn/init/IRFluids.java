@@ -42,8 +42,6 @@ public enum IRFluids implements ItemConvertible {
     }
 
     public void register() {
-        // TODO: for some reason our buckets isn't really registered. at least not in EMI, but they do still work, so idk
-
         RebornFluidManager.register(stillFluid, identifier);
         RebornFluidManager.register(flowingFluid, Resources.id(identifier.getPath() + "_flowing"));
 
