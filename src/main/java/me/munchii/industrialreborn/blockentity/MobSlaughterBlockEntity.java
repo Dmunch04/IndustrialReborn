@@ -6,8 +6,11 @@ import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.init.IRFluids;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
 import reborncore.common.fluid.FluidUtils;
 import reborncore.common.fluid.FluidValue;
@@ -19,19 +22,25 @@ import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
 public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
+    // https://github.com/TechReborn/TechReborn/blob/1.20/src/main/java/techreborn/blockentity/machine/tier2/PumpBlockEntity.java
+    // https://github.com/TechReborn/TechReborn/blob/1.20/src/client/java/techreborn/client/gui/GuiPump.java
     public final Tank experienceTank;
-    public final Tank essenceTank;
 
     public MobSlaughterBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.MOB_SLAUGHTER, pos, state, "MobSlaughter", IndustrialRebornConfig.mobSlaughterMaxInput, IndustrialRebornConfig.mobSlaughterMaxEnergy, IRContent.Machine.MOB_SLAUGHTER.block, 6);
 
         this.inventory = new RebornInventory<>(7, "MobSlaughterBlockEntity", 64, this);
-        this.experienceTank = new Tank("MobSlaughter_LiquidExperience", FluidValue.BUCKET.multiply(10), this);
-        this.essenceTank = new Tank("MobSlaughter_SoulEssence", FluidValue.BUCKET.multiply(10), this);
+
+        this.experienceTank = new Tank("MobSlaughterBlockEntity", FluidValue.BUCKET.multiply(16), this);
         experienceTank.setFluid(IRFluids.LIQUID_EXPERIENCE.getFluid());
-        essenceTank.setFluid(IRFluids.SOUL_ESSENCE.getFluid());
+
         experienceTank.setFluidAmount(FluidValue.BUCKET.multiply(5));
-        //FluidUtils.fillContainers(experienceTank, inventory, 0, 1);
+    }
+
+    @Override
+    @NotNull
+    public Tank getTank() {
+        return experienceTank;
     }
 
     @Override
@@ -40,13 +49,19 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     }
 
     @Override
+    public ItemStack getToolDrop(PlayerEntity p0) {
+        return IRContent.Machine.MOB_SLAUGHTER.getStack();
+    }
+
+    @Override
     public BuiltScreenHandler createScreenHandler(int syncID, PlayerEntity player) {
         return new ScreenHandlerBuilder("mob_slaughter").player(player.getInventory()).inventory().hotbar().addInventory().blockEntity(this)
-                .slot(0, 25, 35).outputSlot(1, 25, 35)
+                .energySlot(6, 8, 72)
+                .outputSlot(0, 75, 35).outputSlot(1, 75, 55).outputSlot(2, 75, 75)
+                .outputSlot(3, 95, 35).outputSlot(4, 95, 55).outputSlot(5, 95, 75)
                 .syncEnergyValue()
                 .sync(this::getExperienceAmount, this::setExperienceAmount)
-                .sync(this::getEssenceAmount, this::setEssenceAmount)
-                .sync(experienceTank).sync(essenceTank)
+                .sync(experienceTank)
                 .addInventory().create(this, syncID);
     }
 
@@ -56,13 +71,5 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
     public void setExperienceAmount(FluidValue amount) {
         experienceTank.setFluidAmount(amount);
-    }
-
-    public FluidValue getEssenceAmount() {
-        return essenceTank.getFluidAmount();
-    }
-
-    public void setEssenceAmount(FluidValue amount) {
-        essenceTank.setFluidAmount(amount);
     }
 }
