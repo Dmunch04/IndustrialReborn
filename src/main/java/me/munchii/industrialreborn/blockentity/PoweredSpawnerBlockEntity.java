@@ -25,6 +25,7 @@ import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
@@ -82,8 +83,10 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
     private static void spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
         double spawnX = pos.getX() + world.random.nextBetween(-range, range);
-        double spawnY = pos.getY() + 0.5;
+        double spawnY = pos.getY();// + 0.5;
         double spawnZ = pos.getZ() + world.random.nextBetween(-range, range);
+
+        // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
         Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag, world);
 
@@ -175,7 +178,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
                 this.entityTag = nbtCompound;
 
                 Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
-                entity.ifPresent(ent -> this.entityType = ent.getDisplayName().getString());
+                entity.ifPresent(ent -> this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString());
             });
         }
 

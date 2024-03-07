@@ -2,7 +2,9 @@ package me.munchii.industrialreborn.client;
 
 import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.blockentity.GuiType;
+import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
 import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
+import me.munchii.industrialreborn.client.gui.GuiMobSlaughter;
 import me.munchii.industrialreborn.client.gui.GuiPoweredSpawner;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -17,6 +19,7 @@ public record ClientGuiType<T extends BlockEntity>(GuiType<T> guiType, GuiFactor
     public static final Map<Identifier, ClientGuiType<?>> TYPES = new HashMap<>();
 
     public static final ClientGuiType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register(GuiType.POWERED_SPAWNER, GuiPoweredSpawner::new);
+    public static final ClientGuiType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register(GuiType.MOB_SLAUGHTER, GuiMobSlaughter::new);
 
     public static <T extends BlockEntity> ClientGuiType<T> register(GuiType<T> type, GuiFactory<T> factory) {
         return new ClientGuiType<>(type, factory);

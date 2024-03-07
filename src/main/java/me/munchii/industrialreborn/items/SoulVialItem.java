@@ -116,7 +116,8 @@ public class SoulVialItem extends Item {
             Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag.get(), world);
 
             entity.ifPresent(ent -> {
-                ent.setPos(spawnX, spawnY, spawnZ);
+                //ent.setPos(spawnX, spawnY, spawnZ);
+                ent.setPosition(pos.toCenterPos().add(0, 0, 0));
                 ent.applyRotation(BlockRotation.random(world.getRandom()));
                 world.spawnEntity(ent);
             });

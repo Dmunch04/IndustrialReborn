@@ -20,7 +20,7 @@ public class IRContent {
 
     public enum Machine implements ItemConvertible {
         POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new)),
-        MOB_SLAUGHTER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, MobSlaughterBlockEntity::new));
+        MOB_SLAUGHTER(new GenericMachineBlock(GuiType.MOB_SLAUGHTER, MobSlaughterBlockEntity::new));
 
         public final String name;
         public final Block block;

@@ -28,6 +28,7 @@ public class GuiType<T extends BlockEntity> implements IMachineGuiHandler {
     public static final Map<Identifier, GuiType<?>> TYPES = new HashMap<>();
 
     public static final GuiType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register("powered_spawner");
+    public static final GuiType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register("mob_slaughter");
 
     private static <T extends BlockEntity> GuiType<T> register(String id) {
         return register(Resources.id(id));
