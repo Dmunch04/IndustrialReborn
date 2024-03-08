@@ -23,4 +23,13 @@ public class IndustrialRebornConfig {
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterMaxEnergy", comment = "Mob Slaughter Max Energy")
     public static int mobSlaughterMaxEnergy = 1_000_000;
+
+    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterEnergyPerSlaughter", comment = "Mob Slaughter Energy Per Slaughter")
+    public static int mobSlaughterEnergyPerSlaughter = 512;
+
+    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterTicksPerSlaughter", comment = "Mob Slaughter Ticks Per Slaughter")
+    public static int mobSlaughterTicksPerSlaughter = 200;
+
+    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterRadius", comment = "Mob Slaughter Radius")
+    public static int mobSlaughterRadius = 4;
 }
