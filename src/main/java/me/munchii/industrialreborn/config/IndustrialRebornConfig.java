@@ -32,4 +32,7 @@ public class IndustrialRebornConfig {
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterRadius", comment = "Mob Slaughter Radius")
     public static int mobSlaughterRadius = 4;
+
+    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterAttackDamage", comment = "Mob Slaughter Attack Damage")
+    public static float mobSlaughterAttackDamage = 75;
 }
