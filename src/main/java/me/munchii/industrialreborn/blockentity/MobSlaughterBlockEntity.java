@@ -11,16 +11,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.WitherEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -41,7 +40,7 @@ import java.util.Objects;
 
 public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
     public int slaughterTime = 0;
-    public int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
+    public final int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
 
     public final int slaughterRadius = IndustrialRebornConfig.mobSlaughterRadius;
 
@@ -55,8 +54,6 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         this.experienceTank = new Tank("MobSlaughterBlockEntity", FluidValue.BUCKET.multiply(16), this);
         experienceTank.setFluid(IRFluids.LIQUID_EXPERIENCE.getFluid());
-
-        //experienceTank.setFluidAmount(FluidValue.BUCKET.multiply(5));
     }
 
     @Override
@@ -73,11 +70,17 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
             return;
         }
 
+        if (centerPos == null) {
+            // it says the block pos and therefor centerpos, is at z-50 but i think its actually z-49 (.5?)
+            // would be better to visualize the slaughter area with multiblock if that would work
+            centerPos = pos.offset(getFacing().getOpposite(), slaughterRadius + 1);
+        }
+
         updateState();
 
         if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter) {
             if (slaughterTime == totalSlaughterTime) {
-                killEntity(world, pos);
+                killEntity(world);
                 useEnergy(IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter);
                 slaughterTime = 0;
             } else {
@@ -86,31 +89,28 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         }
     }
 
-    private void killEntity(World world, BlockPos pos) {
-        if (centerPos == null) {
-            centerPos = pos.offset(getFacing().getOpposite(), slaughterRadius + 1);
-        }
-
-        ServerWorld serverWorld = (ServerWorld) world;
-        List<MobEntity> nearbyEntities = serverWorld.getEntitiesByClass(MobEntity.class, new Box(
+    private void killEntity(World world) {
+        Box slaughterArea = new Box(
                 centerPos.getX() - slaughterRadius,
                 centerPos.getY(),
                 centerPos.getZ() - slaughterRadius,
                 centerPos.getX() + slaughterRadius,
-                centerPos.getY(),
+                centerPos.getY() + 3,
                 centerPos.getZ() + slaughterRadius
-        ), entity -> entity.isAlive()
+        );
+        ServerWorld serverWorld = (ServerWorld) world;
+        List<MobEntity> nearbyEntities = serverWorld.getEntitiesByClass(MobEntity.class, slaughterArea, entity -> entity.isAlive()
                 && !entity.isInvulnerable()
                 && !entity.isBaby()
                 && !(entity instanceof WitherEntity && ((WitherEntity) entity).getInvulnerableTimer() > 0));
 
         if (!nearbyEntities.isEmpty()) {
             MobEntity entity = nearbyEntities.get(0);
-            FakePlayer player = FakePlayer.get(serverWorld);
             if (TagUtil.isIn(IndustrialTags.EntityTypes.MOB_SLAUGHTER_INSTANT_KILL_BLACKLIST, entity.getType())) {
+                FakePlayer player = FakePlayer.get(serverWorld);
                 damage(entity, player);
             } else {
-                instantKill(world, pos, entity, player);
+                instantKill(world, entity);
             }
         }
     }
@@ -119,20 +119,13 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         entity.damage(entity.getDamageSources().playerAttack(player), IndustrialRebornConfig.mobSlaughterAttackDamage);
     }
 
-    private void instantKill(World world, BlockPos pos, MobEntity entity, FakePlayer player) {
+    private void instantKill(World world, MobEntity entity) {
         final int experience = entity.getXpToDrop();
-        int looting = 0;
 
-        DamageSource source = player.getDamageSources().playerAttack(player);
         LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
-        LootContextParameterSet.Builder context = new LootContextParameterSet.Builder((ServerWorld) world)
-                .add(LootContextParameters.THIS_ENTITY, entity)
-                .add(LootContextParameters.DAMAGE_SOURCE, source)
-                .add(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ()))
-                .add(LootContextParameters.KILLER_ENTITY, player)
-                .addOptional(LootContextParameters.LAST_DAMAGE_PLAYER, player);
+        LootContextParameterSet.Builder context = new LootContextParameterSet.Builder((ServerWorld) world);
         insertIntoInv(table.generateLoot(context.build(LootContextType.create().build())));
-        insertFluid(FluidValue.fromMillibuckets(experience * 20L));
+        insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
 
         entity.setHealth(0);
         entity.remove(Entity.RemovalReason.KILLED);
@@ -219,39 +212,24 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         }
     }
 
+    @Override
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
+        getTank().read(tag);
+        centerPos = null;
+    }
+
+    @Override
+    public void writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
+        getTank().write(tag);
+    }
+
     public FluidValue getExperienceAmount() {
         return experienceTank.getFluidAmount();
     }
 
     public void setExperienceAmount(FluidValue amount) {
         experienceTank.setFluidAmount(amount);
-    }
-
-    private static class BoundingBox {
-        private final int minX;
-        private final int maxX;
-        private final int y;
-        private final int minZ;
-        private final int maxZ;
-
-        public BoundingBox(BlockPos center, int radius) {
-            final int diameter = radius * 2 + 1;
-            BlockPos corner1 = center.add(-radius, 0, -radius);
-            BlockPos corner2 = center.add(radius, 0, radius);
-
-            minX = corner1.getX();
-            maxX = corner2.getX();
-            y = center.getY();
-            minZ = corner1.getZ();
-            maxZ = corner2.getZ();
-        }
-
-        public boolean collides(BlockPos pos) {
-            return pos.getX() >= minX
-                    && pos.getX() <= maxX
-                    && pos.getY() == y
-                    && pos.getZ() >= minZ
-                    && pos.getZ() <= maxZ;
-        }
     }
 }
