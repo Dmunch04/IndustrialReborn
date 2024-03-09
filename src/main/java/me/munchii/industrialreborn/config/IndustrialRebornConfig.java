@@ -36,6 +36,24 @@ public class IndustrialRebornConfig {
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterAttackDamage", comment = "Mob Slaughter Attack Damage")
     public static float mobSlaughterAttackDamage = 75;
 
-    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterExperienceMultiplier", comment = "Mob Slaughter Experience Multipler")
+    @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterExperienceMultiplier", comment = "Mob Slaughter Experience Multiplier")
     public static long mobSlaughterExperienceMultiplier = 20L;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorInput", comment = "Soul Extractor Max Input (Energy per tick")
+    public static int soulExtractorMaxInput = 512;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorMaxEnergy", comment = "Soul Extractor Max Energy")
+    public static int soulExtractorMaxEnergy = 1_000_000;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorEnergyPerSlaughter", comment = "Soul Extractor Energy Per Slaughter")
+    public static int soulExtractorEnergyPerExtraction = 512;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorTicksPerSlaughter", comment = "Soul Extractor Ticks Per Slaughter")
+    public static int soulExtractorTicksPerExtraction = 200;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorRadius", comment = "Soul Extractor Radius")
+    public static int soulExtractorRadius = 4;
+
+    @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorExperienceMultiplier", comment = "Soul Extractor Essence Multiplier")
+    public static long soulExtractorEssenceMultiplier = 20L;
 }

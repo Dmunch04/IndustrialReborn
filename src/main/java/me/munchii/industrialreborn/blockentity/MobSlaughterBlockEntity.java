@@ -79,7 +79,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         updateState();
 
         if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter) {
-            if (slaughterTime == totalSlaughterTime) {
+            if (slaughterTime >= totalSlaughterTime) {
                 killEntity(world);
                 useEnergy(IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter);
                 slaughterTime = 0;
