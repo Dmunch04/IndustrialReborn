@@ -1,14 +1,14 @@
 package me.munchii.industrialreborn.init;
 
-import me.munchii.industrialreborn.blockentity.GuiType;
-import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
-import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
-import me.munchii.industrialreborn.blockentity.SoulExtractorBlockEntity;
+import me.munchii.industrialreborn.blockentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import reborncore.api.blockentity.IUpgrade;
 import techreborn.blocks.GenericMachineBlock;
+import techreborn.items.UpgradeItem;
+import techreborn.utils.InitUtils;
 
 import java.util.Locale;
 
@@ -39,6 +39,27 @@ public class IRContent {
         @Override
         public Item asItem() {
             return block.asItem();
+        }
+    }
+
+    public enum Upgrade implements ItemConvertible {
+        RANGE((blockEntity, handler, stack) -> {
+            if (blockEntity instanceof IRangedBlockEntity rangedBlockEntity) {
+                rangedBlockEntity.addRange(3);
+            }
+        });
+
+        public final String name;
+        public final Item item;
+
+        Upgrade(IUpgrade upgrade) {
+            name = this.toString().toLowerCase(Locale.ROOT) + "_upgrade";
+            item = new UpgradeItem(name, upgrade);
+        }
+
+        @Override
+        public Item asItem() {
+            return item;
         }
     }
 }

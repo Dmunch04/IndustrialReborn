@@ -1,6 +1,5 @@
 package me.munchii.industrialreborn.blockentity;
 
-import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -39,7 +38,7 @@ import techreborn.blockentity.machine.GenericMachineBlockEntity;
 import java.util.List;
 import java.util.Objects;
 
-public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
+public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int slaughterTime = 0;
     public final int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
 
@@ -134,6 +133,16 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         entity.setHealth(0);
         entity.remove(Entity.RemovalReason.KILLED);
+    }
+
+    @Override
+    public void addRange(int range) {
+
+    }
+
+    @Override
+    public void addRangeMultiplier(float multiplier) {
+
     }
 
     private void updateState() {

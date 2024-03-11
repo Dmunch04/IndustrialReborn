@@ -33,6 +33,8 @@ public class RegistryManager {
     }
 
     private static void registerItems() {
+        Arrays.stream(IRContent.Upgrade.values()).forEach(value -> registerItem(value.name, value.asItem()));
+
         IRContent.EMPTY_SOUL_VIAL = registerItem("empty_soul_vial", new SoulVialItem(false));
         IRContent.FILLED_SOUL_VIAL = registerItem("filled_soul_vial", new SoulVialItem(true));
     }

@@ -32,6 +32,7 @@ public class IRItemGroup {
         entries.add(IRContent.BROKEN_SPAWNER);
 
         addContent(IRContent.Machine.values(), entries);
+        addContent(IRContent.Upgrade.values(), entries);
         Arrays.stream(IRFluids.values()).forEach(value -> entries.add(value.getBucket()));
     }
 

@@ -15,7 +15,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -31,7 +30,7 @@ import techreborn.blockentity.machine.GenericMachineBlockEntity;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
+public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int spawnTime = 0;
     public int totalSpawnTime = IndustrialRebornConfig.poweredSpawnerTicksPerSpawn;
 
@@ -98,6 +97,16 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
             ent.applyRotation(BlockRotation.random(world.getRandom()));
             world.spawnEntity(ent);
         });
+    }
+
+    @Override
+    public void addRange(int range) {
+
+    }
+
+    @Override
+    public void addRangeMultiplier(float multiplier) {
+
     }
 
     private void updateState() {

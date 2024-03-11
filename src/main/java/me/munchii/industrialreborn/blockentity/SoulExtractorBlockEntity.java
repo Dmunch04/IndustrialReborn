@@ -26,7 +26,7 @@ import reborncore.common.util.RebornInventory;
 import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
-public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
+public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int extractionTime = 0;
     public final int totalExtractionTime = IndustrialRebornConfig.soulExtractorTicksPerExtraction;
 
@@ -88,6 +88,16 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     }
 
     private void extractSoul(World world) {
+
+    }
+
+    @Override
+    public void addRange(int range) {
+
+    }
+
+    @Override
+    public void addRangeMultiplier(float multiplier) {
 
     }
 

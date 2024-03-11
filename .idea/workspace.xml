@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/utils/BoxUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/IRangedBlockEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/range_upgrade.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/item/upgrade/range_upgrade.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/PoweredSpawnerBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/PoweredSpawnerBlockEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/IndustrialRebornClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/IndustrialRebornClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/SoulExtractorBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/SoulExtractorBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRItemGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRItemGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,9 +79,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="FabricBlock" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -129,6 +134,7 @@
       <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\data\minecraft\loot_tables\blocks" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn\textures\item\upgrade" />
       <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn\textures\item" />
       <recent name="C:\Users\danie\Documents\GitHub\IndustrialReborn\src\main\resources\assets\industrialreborn\textures\block\fluids" />
     </key>
@@ -228,7 +234,7 @@
       <workItem from="1709829039697" duration="4845000" />
       <workItem from="1709885447348" duration="12495000" />
       <workItem from="1709974310428" duration="5681000" />
-      <workItem from="1710148356149" duration="3098000" />
+      <workItem from="1710148356149" duration="4706000" />
     </task>
     <servers />
   </component>
