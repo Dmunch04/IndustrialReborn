@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RSR",
+    "RVR",
+    "CMC"
+  ],
+  "key": {
+    "R": {
+      "item": "techreborn:reinforced_glass"
+    },
+    "S": {
+      "item": "minecraft:diamond_sword"
+    },
+    "V": {
+      "item": "industrialreborn:empty_soul_vial"
+    },
+    "C": {
+      "item": "techreborn:advanced_circuit"
+    },
+    "M": {
+      "item": "techreborn:advanced_machine_frame"
+    }
+  },
+  "result": {
+    "item": "industrialreborn:soul_extractor"
+  }
+}
