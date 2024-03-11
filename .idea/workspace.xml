@@ -5,27 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/FluidTransposerBlockEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiFluidTransposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRRecipes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/recipe/FluidTransposerRecipe.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/blockstates/fluid_transposer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_transposer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_transposer_on.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/fluid_transposer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_transposer_front_off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_transposer_front_on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_transposer_front_on.png.mcmeta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/fluid_transposer/xp_bottle.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/fluid_transposer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +225,7 @@
       <workItem from="1709829039697" duration="4845000" />
       <workItem from="1709885447348" duration="12495000" />
       <workItem from="1709974310428" duration="5681000" />
-      <workItem from="1710148356149" duration="20384000" />
+      <workItem from="1710148356149" duration="20809000" />
     </task>
     <servers />
   </component>

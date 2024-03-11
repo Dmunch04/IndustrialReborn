@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GBG",
+    "GFG",
+    "WCW"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "F": {
+      "item": "techreborn:basic_machine_frame"
+    },
+    "W": {
+      "item": "techreborn:insulated_copper_cable"
+    },
+    "C": {
+      "item": "techreborn:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "industrialreborn:fluid_transposer"
+  }
+}
