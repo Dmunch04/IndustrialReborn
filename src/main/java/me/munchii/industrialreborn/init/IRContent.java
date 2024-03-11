@@ -45,7 +45,7 @@ public class IRContent {
     public enum Upgrade implements ItemConvertible {
         RANGE((blockEntity, handler, stack) -> {
             if (blockEntity instanceof IRangedBlockEntity rangedBlockEntity) {
-                rangedBlockEntity.addRange(3);
+                rangedBlockEntity.addRange(2);
             }
         });
 

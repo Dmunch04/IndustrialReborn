@@ -37,6 +37,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public final int vialSlot = 0;
 
     public final int spawnRange = IndustrialRebornConfig.poweredSpawnerSpawnRange;
+    public int extraRange = 0;
 
     public final EntitySoulStore entityStore;
 
@@ -71,7 +72,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         if (getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn) {
             if (entityStore.hasStoredSoul()) {
                 if (spawnTime == totalSpawnTime) {
-                    spawnEntity(world, pos, entityStore.entityTag, spawnRange);
+                    spawnEntity(world, pos, entityStore.entityTag, getRange());
                     useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
                     spawnTime = 0;
                 } else {
@@ -99,14 +100,18 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         });
     }
 
+    public int getRange() {
+        return spawnRange + extraRange;
+    }
+
     @Override
     public void addRange(int range) {
-
+        extraRange += range;
     }
 
     @Override
     public void addRangeMultiplier(float multiplier) {
-
+        extraRange += Math.round(spawnRange * multiplier);
     }
 
     private void updateState() {
@@ -134,8 +139,9 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public void writeMultiblock(MultiblockWriter writer) {
         final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
 
-        for (int i = -spawnRange; i <= spawnRange; i++) {
-            for (int j = -spawnRange; j <= spawnRange; j++) {
+        final int range = getRange();
+        for (int i = -range; i <= range; i++) {
+            for (int j = -range; j <= range; j++) {
                 writer.add(i, 0, j, (world, pos) -> true, glass);
             }
         }
@@ -151,12 +157,6 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     }
 
     @Override
-    public boolean canBeUpgraded() {
-        // TODO make upgradable
-        return false;
-    }
-
-    @Override
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         // TODO: read entity store
@@ -166,6 +166,12 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         // TODO: write entity store
+    }
+
+    @Override
+    public void resetUpgrades() {
+        super.resetUpgrades();
+        extraRange = 0;
     }
 
     public int getScaledSpawnTime(final int i) {

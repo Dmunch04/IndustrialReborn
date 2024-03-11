@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.blockentity;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -43,6 +44,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     public final int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
 
     public final int slaughterRadius = IndustrialRebornConfig.mobSlaughterRadius;
+    public int extraRadius = 0;
 
     public final Tank experienceTank;
 
@@ -74,17 +76,17 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         if (centerPos == null) {
             // it says the block pos and therefor centerpos, is at z-50 but i think its actually z-49 (.5?)
             // would be better to visualize the slaughter area with multiblock if that would work
-            centerPos = pos.offset(getFacing().getOpposite(), slaughterRadius + 1);
+            centerPos = pos.offset(getFacing().getOpposite(), getRadius() + 1);
         }
 
         if (slaughterArea == null) {
             slaughterArea = new Box(
-                    centerPos.getX() - slaughterRadius,
+                    centerPos.getX() - getRadius(),
                     centerPos.getY(),
-                    centerPos.getZ() - slaughterRadius,
-                    centerPos.getX() + slaughterRadius,
+                    centerPos.getZ() - getRadius(),
+                    centerPos.getX() + getRadius(),
                     centerPos.getY() + 3,
-                    centerPos.getZ() + slaughterRadius
+                    centerPos.getZ() + getRadius()
             );
         }
 
@@ -135,14 +137,22 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         entity.remove(Entity.RemovalReason.KILLED);
     }
 
+    public int getRadius() {
+        return slaughterRadius + extraRadius;
+    }
+
     @Override
     public void addRange(int range) {
-
+        extraRadius += range;
+        centerPos = null;
+        slaughterArea = null;
     }
 
     @Override
     public void addRangeMultiplier(float multiplier) {
-
+        extraRadius += Math.round(slaughterRadius * multiplier);
+        centerPos = null;
+        slaughterArea = null;
     }
 
     private void updateState() {
@@ -216,9 +226,10 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     public void writeMultiblock(MultiblockWriter writer) {
         final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
 
-        final int diameter = slaughterRadius * 2 + 1;
+        final int radius = getRadius();
+        final int diameter = radius * 2 + 1;
         for (int i = 1; i <= diameter; i++) {
-            for (int j = -slaughterRadius; j <= slaughterRadius; j++) {
+            for (int j = -radius; j <= radius; j++) {
                 writer.add(i, 0, j, (world, pos) -> true, glass);
                 writer.add(i, 1, j, (world, pos) -> true, glass);
                 writer.add(i, 2, j, (world, pos) -> true, glass);
@@ -238,6 +249,12 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         getTank().write(tag);
+    }
+
+    @Override
+    public void resetUpgrades() {
+        super.resetUpgrades();
+        extraRadius = 0;
     }
 
     public FluidValue getExperienceAmount() {

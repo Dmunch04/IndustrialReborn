@@ -31,6 +31,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     public final int totalExtractionTime = IndustrialRebornConfig.soulExtractorTicksPerExtraction;
 
     public final int extractionRadius = IndustrialRebornConfig.soulExtractorRadius;
+    public int extraRadius = 0;
 
     public final Tank essenceTank;
 
@@ -60,17 +61,18 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
         }
 
         if (centerPos == null) {
-            centerPos = pos.offset(getFacing().getOpposite(), extractionRadius + 1);
+            centerPos = pos.offset(getFacing().getOpposite(), getRadius() + 1);
         }
 
         if (extractArea == null) {
+            final int radius = getRadius();
             extractArea = new Box(
-                    centerPos.getX() - extractionRadius,
+                    centerPos.getX() - radius,
                     centerPos.getY(),
-                    centerPos.getZ() - extractionRadius,
-                    centerPos.getX() + extractionRadius,
+                    centerPos.getZ() - radius,
+                    centerPos.getX() + radius,
                     centerPos.getY() + 3,
-                    centerPos.getZ() + extractionRadius
+                    centerPos.getZ() + radius
             );
         }
 
@@ -91,14 +93,22 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
 
     }
 
+    public int getRadius() {
+        return extractionRadius + extraRadius;
+    }
+
     @Override
     public void addRange(int range) {
-
+        extraRadius += range;
+        centerPos = null;
+        extractArea = null;
     }
 
     @Override
     public void addRangeMultiplier(float multiplier) {
-
+        extraRadius += Math.round(extractionRadius * multiplier);
+        centerPos = null;
+        extractArea = null;
     }
 
     private void updateState() {
@@ -132,9 +142,10 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     public void writeMultiblock(MultiblockWriter writer) {
         final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
 
-        final int diameter = extractionRadius * 2 + 1;
+        final int radius = getRadius();
+        final int diameter = radius * 2 + 1;
         for (int i = 1; i <= diameter; i++) {
-            for (int j = -extractionRadius; j <= extractionRadius; j++) {
+            for (int j = -radius; j <= radius; j++) {
                 writer.add(i, 0, j, (world, pos) -> true, glass);
                 writer.add(i, 1, j, (world, pos) -> true, glass);
                 writer.add(i, 2, j, (world, pos) -> true, glass);
@@ -159,6 +170,12 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         getTank().write(tag);
+    }
+
+    @Override
+    public void resetUpgrades() {
+        super.resetUpgrades();
+        extraRadius = 0;
     }
 
     public FluidValue getEssenceAmount() {
