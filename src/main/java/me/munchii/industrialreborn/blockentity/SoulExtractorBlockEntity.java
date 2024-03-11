@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -34,6 +35,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     public final Tank essenceTank;
 
     private BlockPos centerPos;
+    private Box extractArea;
 
     public SoulExtractorBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.SOUL_EXTRACTOR, pos, state, "SoulExtractor", IndustrialRebornConfig.soulExtractorMaxInput, IndustrialRebornConfig.soulExtractorMaxEnergy, IRContent.Machine.SOUL_EXTRACTOR.block, 0);
@@ -59,6 +61,17 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
 
         if (centerPos == null) {
             centerPos = pos.offset(getFacing().getOpposite(), extractionRadius + 1);
+        }
+
+        if (extractArea == null) {
+            extractArea = new Box(
+                    centerPos.getX() - extractionRadius,
+                    centerPos.getY(),
+                    centerPos.getZ() - extractionRadius,
+                    centerPos.getX() + extractionRadius,
+                    centerPos.getY() + 3,
+                    centerPos.getZ() + extractionRadius
+            );
         }
 
         updateState();
@@ -107,13 +120,14 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
 
     @Override
     public void writeMultiblock(MultiblockWriter writer) {
-        // TODO: multiblock doesn't draw for some reason
-        final BlockState head = Blocks.PLAYER_HEAD.getDefaultState();
+        final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
 
         final int diameter = extractionRadius * 2 + 1;
         for (int i = 1; i <= diameter; i++) {
             for (int j = -extractionRadius; j <= extractionRadius; j++) {
-                writer.add(i, 0, j, (world, pos) -> true, head);
+                writer.add(i, 0, j, (world, pos) -> true, glass);
+                writer.add(i, 1, j, (world, pos) -> true, glass);
+                writer.add(i, 2, j, (world, pos) -> true, glass);
             }
         }
     }
@@ -128,6 +142,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
         super.readNbt(tag);
         getTank().read(tag);
         centerPos = null;
+        extractArea = null;
     }
 
     @Override

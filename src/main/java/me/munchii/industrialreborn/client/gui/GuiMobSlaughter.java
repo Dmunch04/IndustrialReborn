@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.client.gui;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,7 +45,6 @@ public class GuiMobSlaughter extends GuiBase<BuiltScreenHandler> {
     }
 
     public void onClick(GuiButtonExtended button, Double x, Double y) {
-        // TODO multiblock doesn't draw. this does however set it to true, so unsure of cause
         blockEntity.renderMultiblock ^= !hideGuiElements();
     }
 }

@@ -2,6 +2,7 @@ package me.munchii.industrialreborn.client;
 
 import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.client.render.DynamicBucketBakedModel;
+import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.init.IRFluids;
 import me.munchii.industrialreborn.utils.Resources;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.ModelBakeSettings;
@@ -25,6 +27,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+import reborncore.client.multiblock.MultiblockRenderer;
 import techreborn.client.render.BaseDynamicFluidBakedModel;
 
 import java.util.Arrays;
@@ -39,6 +42,7 @@ public class IndustrialRebornClient implements ClientModInitializer {
     public void onInitializeClient() {
         registerBuckets();
         setupTextures();
+        registerMultiblocks();
 
         ClientGuiType.validate();
     }
@@ -81,6 +85,11 @@ public class IndustrialRebornClient implements ClientModInitializer {
                 return null;
             });
         });
+    }
+
+    private void registerMultiblocks() {
+        BlockEntityRendererFactories.register(IRBlockEntities.MOB_SLAUGHTER, MultiblockRenderer::new);
+        BlockEntityRendererFactories.register(IRBlockEntities.SOUL_EXTRACTOR, MultiblockRenderer::new);
     }
 
     private record UnbakedDynamicModel(Supplier<BaseDynamicFluidBakedModel> supplier) implements UnbakedModel {

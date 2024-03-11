@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.blockentity;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -47,6 +48,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     public final Tank experienceTank;
 
     private BlockPos centerPos;
+    private Box slaughterArea;
 
     public MobSlaughterBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.MOB_SLAUGHTER, pos, state, "MobSlaughter", IndustrialRebornConfig.mobSlaughterMaxInput, IndustrialRebornConfig.mobSlaughterMaxEnergy, IRContent.Machine.MOB_SLAUGHTER.block, 6);
@@ -76,6 +78,17 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
             centerPos = pos.offset(getFacing().getOpposite(), slaughterRadius + 1);
         }
 
+        if (slaughterArea == null) {
+            slaughterArea = new Box(
+                    centerPos.getX() - slaughterRadius,
+                    centerPos.getY(),
+                    centerPos.getZ() - slaughterRadius,
+                    centerPos.getX() + slaughterRadius,
+                    centerPos.getY() + 3,
+                    centerPos.getZ() + slaughterRadius
+            );
+        }
+
         updateState();
 
         if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter) {
@@ -90,14 +103,6 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     }
 
     private void killEntity(World world) {
-        Box slaughterArea = new Box(
-                centerPos.getX() - slaughterRadius,
-                centerPos.getY(),
-                centerPos.getZ() - slaughterRadius,
-                centerPos.getX() + slaughterRadius,
-                centerPos.getY() + 3,
-                centerPos.getZ() + slaughterRadius
-        );
         ServerWorld serverWorld = (ServerWorld) world;
         List<MobEntity> nearbyEntities = serverWorld.getEntitiesByClass(MobEntity.class, slaughterArea, entity -> entity.isAlive()
                 && !entity.isInvulnerable()
@@ -201,13 +206,14 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
     @Override
     public void writeMultiblock(MultiblockWriter writer) {
-        // TODO: multiblock doesn't draw for some reason
-        final BlockState head = Blocks.PLAYER_HEAD.getDefaultState();
+        final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
 
         final int diameter = slaughterRadius * 2 + 1;
         for (int i = 1; i <= diameter; i++) {
             for (int j = -slaughterRadius; j <= slaughterRadius; j++) {
-                writer.add(i, 0, j, (world, pos) -> true, head);
+                writer.add(i, 0, j, (world, pos) -> true, glass);
+                writer.add(i, 1, j, (world, pos) -> true, glass);
+                writer.add(i, 2, j, (world, pos) -> true, glass);
             }
         }
     }
@@ -217,6 +223,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         super.readNbt(tag);
         getTank().read(tag);
         centerPos = null;
+        slaughterArea = null;
     }
 
     @Override
