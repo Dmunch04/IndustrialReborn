@@ -168,6 +168,9 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     }
 
     private void insertFluid(FluidValue amount) {
+        if (experienceTank.getFluidAmount().add(amount).equalOrMoreThan(FluidValue.BUCKET.multiply(16))) {
+            return;
+        }
         setExperienceAmount(experienceTank.getFluidAmount().add(amount));
     }
 

@@ -166,6 +166,9 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     }
 
     private void insertFluid(FluidValue amount) {
+        if (essenceTank.getFluidAmount().add(amount).equalOrMoreThan(FluidValue.BUCKET.multiply(16))) {
+            return;
+        }
         setEssenceAmount(essenceTank.getFluidAmount().add(amount));
     }
 
