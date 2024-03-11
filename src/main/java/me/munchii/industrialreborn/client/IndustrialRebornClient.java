@@ -88,6 +88,7 @@ public class IndustrialRebornClient implements ClientModInitializer {
     }
 
     private void registerMultiblocks() {
+        BlockEntityRendererFactories.register(IRBlockEntities.POWERED_SPAWNER, MultiblockRenderer::new);
         BlockEntityRendererFactories.register(IRBlockEntities.MOB_SLAUGHTER, MultiblockRenderer::new);
         BlockEntityRendererFactories.register(IRBlockEntities.SOUL_EXTRACTOR, MultiblockRenderer::new);
     }

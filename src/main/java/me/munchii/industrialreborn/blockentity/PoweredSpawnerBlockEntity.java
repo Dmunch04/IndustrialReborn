@@ -5,6 +5,7 @@ import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,9 +15,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
+import reborncore.common.blockentity.MultiblockWriter;
 import reborncore.common.blockentity.RedstoneConfiguration;
 import reborncore.common.blocks.BlockMachineBase;
 import reborncore.common.screen.BuiltScreenHandler;
@@ -102,8 +105,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
         final BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof final BlockMachineBase blockMachineBase) {
-            //boolean active = entityStore.hasStoredSoul() && getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn;
-            boolean active = true;
+            boolean active = entityStore.hasStoredSoul() && getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn;
             if (blockState.get(BlockMachineBase.ACTIVE) != active) {
                 blockMachineBase.setActive(active, world, pos);
             }
@@ -119,6 +121,17 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
                 .sync(this::getEntityType, this::setEntityType).addInventory().create(this, syncID);
     }
 
+    @Override
+    public void writeMultiblock(MultiblockWriter writer) {
+        final BlockState glass = Blocks.RED_STAINED_GLASS.getDefaultState();
+
+        for (int i = -spawnRange; i <= spawnRange; i++) {
+            for (int j = -spawnRange; j <= spawnRange; j++) {
+                writer.add(i, 0, j, (world, pos) -> true, glass);
+            }
+        }
+    }
+
     public static boolean filledVialFilter(ItemStack stack) {
         Item item = stack.getItem();
         if (item == IRContent.FILLED_SOUL_VIAL) {
@@ -132,6 +145,18 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public boolean canBeUpgraded() {
         // TODO make upgradable
         return false;
+    }
+
+    @Override
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
+        // TODO: read entity store
+    }
+
+    @Override
+    public void writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
+        // TODO: write entity store
     }
 
     public int getScaledSpawnTime(final int i) {

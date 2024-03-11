@@ -141,8 +141,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         final BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof final BlockMachineBase blockMachineBase) {
-            //boolean active = entityStore.hasStoredSoul() && getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn;
-            boolean active = true;
+            boolean active = getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter;
             if (blockState.get(BlockMachineBase.ACTIVE) != active) {
                 blockMachineBase.setActive(active, world, pos);
             }
