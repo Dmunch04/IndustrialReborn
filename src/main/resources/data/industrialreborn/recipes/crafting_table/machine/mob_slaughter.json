@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "WMW",
+    "DCD"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "W": {
+      "item": "techreborn:insulated_copper_cable"
+    },
+    "M": {
+      "item": "techreborn:advanced_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:diamond_sword"
+    },
+    "C": {
+      "item": "techreborn:advanced_circuit"
+    }
+  },
+  "result": {
+    "item": "industrialreborn:mob_slaughter"
+  }
+}

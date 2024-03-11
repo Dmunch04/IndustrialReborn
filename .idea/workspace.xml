@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/upgrade/range_upgrade.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/mob_slaughter.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -225,7 +225,7 @@
       <workItem from="1709829039697" duration="4845000" />
       <workItem from="1709885447348" duration="12495000" />
       <workItem from="1709974310428" duration="5681000" />
-      <workItem from="1710148356149" duration="11489000" />
+      <workItem from="1710148356149" duration="12073000" />
     </task>
     <servers />
   </component>
