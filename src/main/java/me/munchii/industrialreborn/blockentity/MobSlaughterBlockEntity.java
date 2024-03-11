@@ -92,7 +92,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         updateState();
 
-        if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter) {
+        if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter && !experienceTank.isFull()) {
             if (slaughterTime >= totalSlaughterTime) {
                 killEntity(world);
                 useEnergy(IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter);
@@ -160,7 +160,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         final BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof final BlockMachineBase blockMachineBase) {
-            boolean active = getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter;
+            boolean active = !experienceTank.isFull() && getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter;
             if (blockState.get(BlockMachineBase.ACTIVE) != active) {
                 blockMachineBase.setActive(active, world, pos);
             }

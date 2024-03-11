@@ -59,4 +59,10 @@ public class IndustrialRebornConfig {
 
     @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorAttackDamage", comment = "Soul Extractor Attack Damage")
     public static float soulExtractorAttackDamage = 5;
+
+    @Config(config = "machines", category = "fluid_transposer", key = "FluidTransposerMaxInput", comment = "Fluid Transposer Max Input")
+    public static int fluidTransposerMaxInput = 32;
+
+    @Config(config = "machines", category = "fluid_transposer", key = "FluidTransposerMaxEnergy", comment = "Fluid Transposer Max Energy")
+    public static int fluidTransposerMaxEnergy = 1000;
 }

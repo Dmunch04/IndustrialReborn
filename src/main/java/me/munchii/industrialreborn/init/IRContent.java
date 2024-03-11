@@ -22,7 +22,8 @@ public class IRContent {
     public enum Machine implements ItemConvertible {
         POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new)),
         MOB_SLAUGHTER(new GenericMachineBlock(GuiType.MOB_SLAUGHTER, MobSlaughterBlockEntity::new)),
-        SOUL_EXTRACTOR(new GenericMachineBlock(GuiType.SOUL_EXTRACTOR, SoulExtractorBlockEntity::new));
+        SOUL_EXTRACTOR(new GenericMachineBlock(GuiType.SOUL_EXTRACTOR, SoulExtractorBlockEntity::new)),
+        FLUID_TRANSPOSER(new GenericMachineBlock(GuiType.FLUID_TRANSPOSER, FluidTransposerBlockEntity::new));
 
         public final String name;
         public final Block block;

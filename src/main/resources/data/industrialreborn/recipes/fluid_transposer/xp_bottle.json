@@ -1,0 +1,19 @@
+{
+  "type": "industrialreborn:fluid_transposer",
+  "power": 128,
+  "time": 100,
+  "tank": {
+    "fluid": "industrialreborn:liquid_experience",
+    "amount": 100
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:experience_bottle"
+    }
+  ]
+}

@@ -1,9 +1,6 @@
 package me.munchii.industrialreborn;
 
-import me.munchii.industrialreborn.init.IRBlockEntities;
-import me.munchii.industrialreborn.init.IRContent;
-import me.munchii.industrialreborn.init.IRFluids;
-import me.munchii.industrialreborn.init.IRItemGroup;
+import me.munchii.industrialreborn.init.*;
 import me.munchii.industrialreborn.items.SoulVialItem;
 import me.munchii.industrialreborn.utils.Resources;
 import net.minecraft.block.Block;
@@ -20,6 +17,7 @@ public class RegistryManager {
         registerBlocks();
         registerItems();
         registerFluids();
+        registerRecipes();
 
         IRBlockEntities.init();
         IRItemGroup.register();
@@ -41,6 +39,12 @@ public class RegistryManager {
 
     private static void registerFluids() {
         Arrays.stream(IRFluids.values()).forEach(IRFluids::register);
+    }
+
+    private static void registerRecipes() {
+        // force load class
+        //noinspection ResultOfMethodCallIgnored
+        IRRecipes.FLUID_TRANSPOSER.hashCode();
     }
 
     private static <I extends Item> I registerItem(String name, I item) {

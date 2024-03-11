@@ -30,6 +30,7 @@ public class GuiType<T extends BlockEntity> implements IMachineGuiHandler {
     public static final GuiType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register("powered_spawner");
     public static final GuiType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register("mob_slaughter");
     public static final GuiType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register("soul_extractor");
+    public static final GuiType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register("fluid_transposer");
 
     private static <T extends BlockEntity> GuiType<T> register(String id) {
         return register(Resources.id(id));

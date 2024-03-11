@@ -1,10 +1,8 @@
 package me.munchii.industrialreborn.client;
 
 import me.munchii.industrialreborn.IndustrialReborn;
-import me.munchii.industrialreborn.blockentity.GuiType;
-import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
-import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
-import me.munchii.industrialreborn.blockentity.SoulExtractorBlockEntity;
+import me.munchii.industrialreborn.blockentity.*;
+import me.munchii.industrialreborn.client.gui.GuiFluidTransposer;
 import me.munchii.industrialreborn.client.gui.GuiMobSlaughter;
 import me.munchii.industrialreborn.client.gui.GuiPoweredSpawner;
 import me.munchii.industrialreborn.client.gui.GuiSoulExtractor;
@@ -23,6 +21,7 @@ public record ClientGuiType<T extends BlockEntity>(GuiType<T> guiType, GuiFactor
     public static final ClientGuiType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register(GuiType.POWERED_SPAWNER, GuiPoweredSpawner::new);
     public static final ClientGuiType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register(GuiType.MOB_SLAUGHTER, GuiMobSlaughter::new);
     public static final ClientGuiType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register(GuiType.SOUL_EXTRACTOR, GuiSoulExtractor::new);
+    public static final ClientGuiType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register(GuiType.FLUID_TRANSPOSER, GuiFluidTransposer::new);
 
     public static <T extends BlockEntity> ClientGuiType<T> register(GuiType<T> type, GuiFactory<T> factory) {
         return new ClientGuiType<>(type, factory);
