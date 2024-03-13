@@ -74,8 +74,6 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         }
 
         if (centerPos == null) {
-            // it says the block pos and therefor centerpos, is at z-50 but i think its actually z-49 (.5?)
-            // would be better to visualize the slaughter area with multiblock if that would work
             centerPos = pos.offset(getFacing().getOpposite(), getRadius() + 1);
         }
 
@@ -150,7 +148,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
     @Override
     public void addRangeMultiplier(float multiplier) {
-        extraRadius += Math.round(slaughterRadius * multiplier);
+        extraRadius += Math.round(getRadius() * multiplier);
         centerPos = null;
         slaughterArea = null;
     }

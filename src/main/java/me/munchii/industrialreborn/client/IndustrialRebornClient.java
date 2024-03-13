@@ -91,6 +91,7 @@ public class IndustrialRebornClient implements ClientModInitializer {
         BlockEntityRendererFactories.register(IRBlockEntities.POWERED_SPAWNER, MultiblockRenderer::new);
         BlockEntityRendererFactories.register(IRBlockEntities.MOB_SLAUGHTER, MultiblockRenderer::new);
         BlockEntityRendererFactories.register(IRBlockEntities.SOUL_EXTRACTOR, MultiblockRenderer::new);
+        BlockEntityRendererFactories.register(IRBlockEntities.ANIMAL_FEEDER, MultiblockRenderer::new);
     }
 
     private record UnbakedDynamicModel(Supplier<BaseDynamicFluidBakedModel> supplier) implements UnbakedModel {

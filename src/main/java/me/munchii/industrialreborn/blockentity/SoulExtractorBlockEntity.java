@@ -148,7 +148,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
 
     @Override
     public void addRangeMultiplier(float multiplier) {
-        extraRadius += Math.round(extractionRadius * multiplier);
+        extraRadius += Math.round(getRadius() * multiplier);
         centerPos = null;
         extractArea = null;
     }
@@ -158,7 +158,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
 
         final BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof final BlockMachineBase blockMachineBase) {
-            boolean active = !essenceTank.isFull() && getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn;
+            boolean active = !essenceTank.isFull() && getStored() > IndustrialRebornConfig.soulExtractorEnergyPerExtraction;
             if (blockState.get(BlockMachineBase.ACTIVE) != active) {
                 blockMachineBase.setActive(active, world, pos);
             }

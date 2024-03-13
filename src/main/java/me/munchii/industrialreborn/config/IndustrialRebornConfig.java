@@ -65,4 +65,22 @@ public class IndustrialRebornConfig {
 
     @Config(config = "machines", category = "fluid_transposer", key = "FluidTransposerMaxEnergy", comment = "Fluid Transposer Max Energy")
     public static int fluidTransposerMaxEnergy = 1000;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederInput", comment = "Animal Feeder Max Input (Energy per tick")
+    public static int animalFeederMaxInput = 128;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederMaxEnergy", comment = "Animal Feeder Max Energy")
+    public static int animalFeederMaxEnergy = 100_000;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederEnergyPerFeeding", comment = "Animal Feeder Energy Per Slaughter")
+    public static int animalFeederEnergyPerFeeding = 128;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederTicksPerFeeding", comment = "Animal Feeder Ticks Per Feeding")
+    public static int animalFeederTicksPerFeeding = 80;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederRadius", comment = "Animal Feeder Radius")
+    public static int animalFeederRadius = 4;
+
+    @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederMaxAnimalsInArea", comment = "Animal Feeder Max Animals In Area")
+    public static int animalFeederMaxAnimalsInArea = 50;
 }

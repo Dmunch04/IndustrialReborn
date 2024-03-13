@@ -23,7 +23,8 @@ public class IRContent {
         POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new)),
         MOB_SLAUGHTER(new GenericMachineBlock(GuiType.MOB_SLAUGHTER, MobSlaughterBlockEntity::new)),
         SOUL_EXTRACTOR(new GenericMachineBlock(GuiType.SOUL_EXTRACTOR, SoulExtractorBlockEntity::new)),
-        FLUID_TRANSPOSER(new GenericMachineBlock(GuiType.FLUID_TRANSPOSER, FluidTransposerBlockEntity::new));
+        FLUID_TRANSPOSER(new GenericMachineBlock(GuiType.FLUID_TRANSPOSER, FluidTransposerBlockEntity::new)),
+        ANIMAL_FEEDER(new GenericMachineBlock(GuiType.ANIMAL_FEEDER, AnimalFeederBlockEntity::new));
 
         public final String name;
         public final Block block;

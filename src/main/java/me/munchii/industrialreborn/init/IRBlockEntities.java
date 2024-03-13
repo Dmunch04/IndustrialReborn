@@ -1,9 +1,6 @@
 package me.munchii.industrialreborn.init;
 
-import me.munchii.industrialreborn.blockentity.FluidTransposerBlockEntity;
-import me.munchii.industrialreborn.blockentity.MobSlaughterBlockEntity;
-import me.munchii.industrialreborn.blockentity.PoweredSpawnerBlockEntity;
-import me.munchii.industrialreborn.blockentity.SoulExtractorBlockEntity;
+import me.munchii.industrialreborn.blockentity.*;
 import me.munchii.industrialreborn.utils.Resources;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -29,6 +26,7 @@ public class IRBlockEntities {
     public static final BlockEntityType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register(MobSlaughterBlockEntity::new, "mob_slaughter", IRContent.Machine.MOB_SLAUGHTER);
     public static final BlockEntityType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register(SoulExtractorBlockEntity::new, "soul_extractor", IRContent.Machine.SOUL_EXTRACTOR);
     public static final BlockEntityType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register(FluidTransposerBlockEntity::new, "fluid_transposer", IRContent.Machine.FLUID_TRANSPOSER);
+    public static final BlockEntityType<AnimalFeederBlockEntity> ANIMAL_FEEDER = register(AnimalFeederBlockEntity::new, "animal_feeder", IRContent.Machine.ANIMAL_FEEDER);
 
     public static <T extends BlockEntity> BlockEntityType<T> register(BiFunction<BlockPos, BlockState, T> supplier, String name, ItemConvertible... items) {
         return register(supplier, name, Arrays.stream(items).map(itemConvertible -> Block.getBlockFromItem(itemConvertible.asItem())).toArray(Block[]::new));
