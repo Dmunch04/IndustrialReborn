@@ -12,9 +12,10 @@ public class IndustrialReborn implements ModInitializer {
     // TODO: make new animation for powered spawner because the current looks cursed
     // TODO: make textures for mob slaughter, soul extractor and fluid transposer
     // TODO: redesign gui for above machines maybe? (probably not fluid transposer)
-    // TODO: AnimalFeeder block
-    // TODO: AnimalBabySeparator block
+    // TODO: AnimalFeeder block texture
+    // TODO: AnimalBabySeparator block texture + test
     // TODO: AnimalRancher block
+    // TODO: adult_filter_upgrade texture and item resource
 
     public static final String MOD_ID = "industrialreborn";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);

@@ -24,7 +24,8 @@ public class IRContent {
         MOB_SLAUGHTER(new GenericMachineBlock(GuiType.MOB_SLAUGHTER, MobSlaughterBlockEntity::new)),
         SOUL_EXTRACTOR(new GenericMachineBlock(GuiType.SOUL_EXTRACTOR, SoulExtractorBlockEntity::new)),
         FLUID_TRANSPOSER(new GenericMachineBlock(GuiType.FLUID_TRANSPOSER, FluidTransposerBlockEntity::new)),
-        ANIMAL_FEEDER(new GenericMachineBlock(GuiType.ANIMAL_FEEDER, AnimalFeederBlockEntity::new));
+        ANIMAL_FEEDER(new GenericMachineBlock(GuiType.ANIMAL_FEEDER, AnimalFeederBlockEntity::new)),
+        ANIMAL_BABY_SEPARATOR(new GenericMachineBlock(GuiType.ANIMAL_BABY_SEPARATOR, AnimalBabySeparatorBlockEntity::new));
 
         public final String name;
         public final Block block;
@@ -48,6 +49,11 @@ public class IRContent {
         RANGE((blockEntity, handler, stack) -> {
             if (blockEntity instanceof IRangedBlockEntity rangedBlockEntity) {
                 rangedBlockEntity.addRange(2);
+            }
+        }),
+        ADULT_FILTER((blockEntity, handler, stack) -> {
+            if (blockEntity instanceof AnimalBabySeparatorBlockEntity animalBabySeparatorBlockEntity) {
+                animalBabySeparatorBlockEntity.setMovingAdults(true);
             }
         });
 

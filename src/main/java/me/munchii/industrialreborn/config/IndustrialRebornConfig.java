@@ -83,4 +83,22 @@ public class IndustrialRebornConfig {
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederMaxAnimalsInArea", comment = "Animal Feeder Max Animals In Area")
     public static int animalFeederMaxAnimalsInArea = 50;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorInput", comment = "Animal Baby Separator Max Input (Energy per tick")
+    public static int animalBabySeparatorMaxInput = 128;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorMaxEnergy", comment = "Animal Baby Separator Max Energy")
+    public static int animalBabySeparatorMaxEnergy = 100_000;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorEnergyPerFeeding", comment = "Animal Baby Separator Energy Per Slaughter")
+    public static int animalBabySeparatorEnergyPerSeparation = 128;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorTicksPerFeeding", comment = "Animal Baby Separator Ticks Per Feeding")
+    public static int animalBabySeparatorTicksPerSeparation = 80;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorRadius", comment = "Animal Baby Separator Radius")
+    public static int animalBabySeparatorRadius = 4;
+
+    @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorMaxAnimalsInArea", comment = "Animal Baby Separator Max Animals In Area")
+    public static int animalBabySeparatorMaxAnimalsInArea = 50;
 }

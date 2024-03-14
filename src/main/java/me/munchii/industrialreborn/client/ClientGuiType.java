@@ -20,6 +20,7 @@ public record ClientGuiType<T extends BlockEntity>(GuiType<T> guiType, GuiFactor
     public static final ClientGuiType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register(GuiType.SOUL_EXTRACTOR, GuiSoulExtractor::new);
     public static final ClientGuiType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register(GuiType.FLUID_TRANSPOSER, GuiFluidTransposer::new);
     public static final ClientGuiType<AnimalFeederBlockEntity> ANIMAL_FEEDER = register(GuiType.ANIMAL_FEEDER, GuiAnimalFeeder::new);
+    public static final ClientGuiType<AnimalBabySeparatorBlockEntity> ANIMAL_BABY_SEPARATOR = register(GuiType.ANIMAL_BABY_SEPARATOR, GuiAnimalBabySeparator::new);
 
     public static <T extends BlockEntity> ClientGuiType<T> register(GuiType<T> type, GuiFactory<T> factory) {
         return new ClientGuiType<>(type, factory);
