@@ -99,13 +99,14 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
                     foodStack = getFeedingItem(secondParent).getLeft();
                     if (foodStack.isEmpty()) {
                         original.setCount(1);
-                        inventory.setStack(stack.getRight(), original);
+                        if (stack.getRight() != -1) inventory.setStack(stack.getRight(), original);
                         continue;
                     }
 
                     foodStack.decrement(1);
                     firstParent.lovePlayer(null);
                     secondParent.lovePlayer(null);
+                    return;
                 }
             }
         }

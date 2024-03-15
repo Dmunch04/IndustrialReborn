@@ -38,9 +38,9 @@ public class GuiAnimalFeeder extends GuiBase<BuiltScreenHandler> {
         final Layer layer = Layer.FOREGROUND;
 
         addHologramButton(120, 22, 212, layer).clickHandler(this::onClick);
-        builder.drawHologramButton(drawContext, this, 120, 24, mouseX, mouseY, layer);
+        builder.drawHologramButton(drawContext, this, 120, 22, mouseX, mouseY, layer);
 
-        builder.drawProgressBar(drawContext, this, blockEntity.getFeedingTime(), blockEntity.getTotalFeedingTime(), 79, 80, mouseX, mouseY, GuiBuilder.ProgressDirection.RIGHT, layer);
+        builder.drawProgressBar(drawContext, this, blockEntity.getFeedingTime(), blockEntity.getTotalFeedingTime(), 121, 42, mouseX, mouseY, GuiBuilder.ProgressDirection.RIGHT, layer);
         builder.drawMultiEnergyBar(drawContext, this, 9, 19, (int) blockEntity.getEnergy(), (int) blockEntity.getMaxStoredPower(), mouseX, mouseY, 0, layer);
     }
 

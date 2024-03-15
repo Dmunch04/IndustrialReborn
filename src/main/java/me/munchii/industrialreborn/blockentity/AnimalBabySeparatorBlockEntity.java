@@ -96,7 +96,7 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
     public void separateBaby() {
         ServerWorld serverWorld = (ServerWorld) world;
         assert serverWorld != null;
-        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(1), entity -> entity.isAlive() && !entity.isBaby() == !movingAdults);
+        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(1), entity -> entity.isAlive() && entity.isBaby() == !movingAdults);
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalBabySeparatorMaxAnimalsInArea) {
             AnimalEntity entity = nearbyEntities.get(0);

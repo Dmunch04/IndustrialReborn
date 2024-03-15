@@ -31,7 +31,7 @@ public class GuiPoweredSpawner extends GuiBase<BuiltScreenHandler> {
         super.drawForeground(drawContext, mouseX, mouseY);
         final Layer layer = Layer.FOREGROUND;
 
-        addHologramButton(120, 22, 212, layer).clickHandler(this::onClick);
+        addHologramButton(120, 24, 212, layer).clickHandler(this::onClick);
         builder.drawHologramButton(drawContext, this, 120, 24, mouseX, mouseY, layer);
 
         // TODO: maybe change layout (specifically position of the progress bar)

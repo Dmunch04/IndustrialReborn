@@ -5,16 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAnimalBabySeparator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/blockstates/animal_baby_separator.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/animal_baby_separator.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/animal_baby_separator_on.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/adult_filter_upgrade.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/animal_baby_separator.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/animal_baby_separator_front_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/animal_baby_separator_front_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/animal_baby_separator_front_on.png.mcmeta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/item/upgrade/adult_filter_upgrade.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/IndustrialRebornClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/IndustrialRebornClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAnimalBabySeparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAnimalBabySeparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAnimalFeeder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAnimalFeeder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -301,7 +310,8 @@
       <workItem from="1709974310428" duration="5681000" />
       <workItem from="1710148356149" duration="21744000" />
       <workItem from="1710330921499" duration="8972000" />
-      <workItem from="1710451887228" duration="1939000" />
+      <workItem from="1710451887228" duration="1972000" />
+      <workItem from="1710498492116" duration="4375000" />
     </task>
     <servers />
   </component>

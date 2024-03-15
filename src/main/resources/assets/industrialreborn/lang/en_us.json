@@ -8,12 +8,14 @@
   "block.industrialreborn.soul_extractor": "Soul Extractor",
   "block.industrialreborn.fluid_transposer": "Fluid Transposer",
   "block.industrialreborn.animal_feeder": "Animal Feeder",
+  "block.industrialreborn.animal_baby_separator": "Animal Baby Separator",
 
   "item.industrialreborn.empty_soul_vial": "Soul Vial",
   "item.industrialreborn.filled_soul_vial": "Soul Vial",
   "item.industrialreborn.filled_soul_vial.tooltip": "Contains the soul of %s",
 
   "item.industrialreborn.range_upgrade": "Range Upgrade",
+  "item.industrialreborn.adult_filter_upgrade": "Adult Filter Upgrade",
 
   "block.industrialreborn.liquid_experience": "Liquid Experience",
   "item.industrialreborn.liquid_experience_bucket": "Liquid Experience Bucket",
