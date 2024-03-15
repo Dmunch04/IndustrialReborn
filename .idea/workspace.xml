@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiPoweredSpawner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,7 +294,7 @@
       <workItem from="1710148356149" duration="21744000" />
       <workItem from="1710330921499" duration="8972000" />
       <workItem from="1710451887228" duration="1972000" />
-      <workItem from="1710498492116" duration="5240000" />
+      <workItem from="1710498492116" duration="5539000" />
     </task>
     <servers />
   </component>
