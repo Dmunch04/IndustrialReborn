@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/animal_baby_seperator.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/animal_feeder.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/upgrade/adult_filter_upgrade.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,7 +293,7 @@
       <workItem from="1710148356149" duration="21744000" />
       <workItem from="1710330921499" duration="8972000" />
       <workItem from="1710451887228" duration="1972000" />
-      <workItem from="1710498492116" duration="9930000" />
+      <workItem from="1710498492116" duration="9950000" />
     </task>
     <servers />
   </component>
