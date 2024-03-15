@@ -220,6 +220,8 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
                 .outputSlot(4, 70, 58).outputSlot(5, 88, 58)
                 .syncEnergyValue()
                 .sync(this::getExperienceAmount, this::setExperienceAmount)
+                .sync(this::getSlaughterTime, this::setSlaughterTime)
+                .sync(this::getTotalSlaughterTime, this::setTotalSlaughterTime)
                 .sync(experienceTank)
                 .addInventory().create(this, syncID);
     }
@@ -266,4 +268,18 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     public void setExperienceAmount(FluidValue amount) {
         experienceTank.setFluidAmount(amount);
     }
+
+    public int getSlaughterTime() {
+        return slaughterTime;
+    }
+
+    public void setSlaughterTime(int slaughterTime) {
+        this.slaughterTime = slaughterTime;
+    }
+
+    public int getTotalSlaughterTime() {
+        return totalSlaughterTime;
+    }
+
+    public void setTotalSlaughterTime(int totalSlaughterTime) { }
 }
