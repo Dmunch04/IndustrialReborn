@@ -1,11 +1,8 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "up": "techreborn:block/machines/tier2_machines/machine_top",
-    "down": "techreborn:block/machines/tier2_machines/machine_bottom",
-    "west": "techreborn:block/machines/tier2_machines/machine_west",
-    "east": "techreborn:block/machines/tier2_machines/machine_east",
-    "south": "techreborn:block/machines/tier2_machines/machine_back",
+    "top": "techreborn:block/machines/tier1_machines/machine_top",
+    "side": "techreborn:block/machines/tier1_machines/machine_side",
     "front": "industrialreborn:block/machines/animal_feeder_front_off"
   }
 }

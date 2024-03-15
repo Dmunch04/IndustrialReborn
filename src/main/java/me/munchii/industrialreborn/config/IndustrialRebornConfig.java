@@ -4,7 +4,7 @@ import reborncore.common.config.Config;
 
 public class IndustrialRebornConfig {
     @Config(config = "machines", category = "powered_spawner", key = "PoweredSpawnerInput", comment = "Powered Spawner Max Input (Energy per tick")
-    public static int poweredSpawnerMaxInput = 512;
+    public static int poweredSpawnerMaxInput = 256;
 
     @Config(config = "machines", category = "powered_spawner", key = "PoweredSpawnerMaxEnergy", comment = "Powered Spawner Max Energy")
     public static int poweredSpawnerMaxEnergy = 1_000_000;
@@ -19,13 +19,13 @@ public class IndustrialRebornConfig {
     public static int poweredSpawnerSpawnRange = 8;
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterInput", comment = "Mob Slaughter Max Input (Energy per tick")
-    public static int mobSlaughterMaxInput = 512;
+    public static int mobSlaughterMaxInput = 128;
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterMaxEnergy", comment = "Mob Slaughter Max Energy")
-    public static int mobSlaughterMaxEnergy = 1_000_000;
+    public static int mobSlaughterMaxEnergy = 10_000;
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterEnergyPerSlaughter", comment = "Mob Slaughter Energy Per Slaughter")
-    public static int mobSlaughterEnergyPerSlaughter = 512;
+    public static int mobSlaughterEnergyPerSlaughter = 256;
 
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterTicksPerSlaughter", comment = "Mob Slaughter Ticks Per Slaughter")
     public static int mobSlaughterTicksPerSlaughter = 200;
@@ -40,13 +40,13 @@ public class IndustrialRebornConfig {
     public static long mobSlaughterExperienceMultiplier = 20L;
 
     @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorInput", comment = "Soul Extractor Max Input (Energy per tick")
-    public static int soulExtractorMaxInput = 512;
+    public static int soulExtractorMaxInput = 128;
 
     @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorMaxEnergy", comment = "Soul Extractor Max Energy")
-    public static int soulExtractorMaxEnergy = 1_000_000;
+    public static int soulExtractorMaxEnergy = 10_000;
 
     @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorEnergyPerSlaughter", comment = "Soul Extractor Energy Per Slaughter")
-    public static int soulExtractorEnergyPerExtraction = 256;
+    public static int soulExtractorEnergyPerExtraction = 200;
 
     @Config(config = "machines", category = "soul_extractor", key = "SoulExtractorTicksPerSlaughter", comment = "Soul Extractor Ticks Per Extraction")
     public static int soulExtractorTicksPerExtraction = 80;
@@ -67,16 +67,16 @@ public class IndustrialRebornConfig {
     public static int fluidTransposerMaxEnergy = 1000;
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederInput", comment = "Animal Feeder Max Input (Energy per tick")
-    public static int animalFeederMaxInput = 128;
+    public static int animalFeederMaxInput = 64;
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederMaxEnergy", comment = "Animal Feeder Max Energy")
-    public static int animalFeederMaxEnergy = 100_000;
+    public static int animalFeederMaxEnergy = 1_000;
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederEnergyPerFeeding", comment = "Animal Feeder Energy Per Slaughter")
-    public static int animalFeederEnergyPerFeeding = 128;
+    public static int animalFeederEnergyPerFeeding = 100;
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederTicksPerFeeding", comment = "Animal Feeder Ticks Per Feeding")
-    public static int animalFeederTicksPerFeeding = 80;
+    public static int animalFeederTicksPerFeeding = 100;
 
     @Config(config = "machines", category = "animal_feeder", key = "AnimalFeederRadius", comment = "Animal Feeder Radius")
     public static int animalFeederRadius = 4;
@@ -85,16 +85,16 @@ public class IndustrialRebornConfig {
     public static int animalFeederMaxAnimalsInArea = 50;
 
     @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorInput", comment = "Animal Baby Separator Max Input (Energy per tick")
-    public static int animalBabySeparatorMaxInput = 128;
+    public static int animalBabySeparatorMaxInput = 64;
 
     @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorMaxEnergy", comment = "Animal Baby Separator Max Energy")
-    public static int animalBabySeparatorMaxEnergy = 100_000;
+    public static int animalBabySeparatorMaxEnergy = 1_000;
 
     @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorEnergyPerFeeding", comment = "Animal Baby Separator Energy Per Slaughter")
-    public static int animalBabySeparatorEnergyPerSeparation = 128;
+    public static int animalBabySeparatorEnergyPerSeparation = 100;
 
     @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorTicksPerFeeding", comment = "Animal Baby Separator Ticks Per Feeding")
-    public static int animalBabySeparatorTicksPerSeparation = 80;
+    public static int animalBabySeparatorTicksPerSeparation = 100;
 
     @Config(config = "machines", category = "animal_baby_separator", key = "AnimalBabySeparatorRadius", comment = "Animal Baby Separator Radius")
     public static int animalBabySeparatorRadius = 4;
