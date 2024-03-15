@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CMC",
+    "WGW",
+    "CAC"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "A": {
+      "item": "techreborn:advanced_circuit"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "W": {
+      "item": "minecraft:emerald"
+    },
+    "M": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "industrialreborn:adult_filter_upgrade"
+  }
+}

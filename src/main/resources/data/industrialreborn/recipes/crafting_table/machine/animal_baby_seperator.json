@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GAG",
+    "WMW",
+    "DCD"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:wheat"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "W": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "M": {
+      "item": "techreborn:basic_machine_frame"
+    },
+    "D": {
+      "item": "minecraft:golden_carrot"
+    },
+    "C": {
+      "item": "techreborn:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "industrialreborn:animal_baby_separator"
+  }
+}
