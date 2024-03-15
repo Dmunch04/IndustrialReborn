@@ -179,6 +179,8 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
                 .energySlot(0, 8, 72)
                 .syncEnergyValue()
                 .sync(this::getEssenceAmount, this::setEssenceAmount)
+                .sync(this::getExtractionTime, this::setExtractionTime)
+                .sync(this::getTotalExtractionTime, this::setTotalExtractionTime)
                 .sync(essenceTank)
                 .addInventory().create(this, syncID);
     }
@@ -230,4 +232,18 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
     public void setEssenceAmount(FluidValue amount) {
         essenceTank.setFluidAmount(amount);
     }
+
+    public int getExtractionTime() {
+        return extractionTime;
+    }
+
+    public void setExtractionTime(int extractionTime) {
+        this.extractionTime = extractionTime;
+    }
+
+    public int getTotalExtractionTime() {
+        return totalExtractionTime;
+    }
+
+    public void setTotalExtractionTime(int totalExtractionTime) { }
 }
