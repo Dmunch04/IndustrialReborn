@@ -2,8 +2,6 @@ package me.munchii.industrialreborn;
 
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
-import net.minecraft.registry.Registries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reborncore.common.config.Configuration;

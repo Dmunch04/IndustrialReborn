@@ -15,6 +15,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -85,16 +86,18 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     }
 
     private static void spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
-        double spawnX = pos.getX() + world.random.nextBetween(-range, range);
-        double spawnY = pos.getY();// + 0.5;
-        double spawnZ = pos.getZ() + world.random.nextBetween(-range, range);
+        Vec3d spawnPos = new BlockPos(
+                pos.getX() + world.random.nextBetween(-range, range),
+                pos.getY() - 1,
+                pos.getZ() + world.random.nextBetween(-range, range)
+        ).toCenterPos().add(0, 0.5, 0);
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
         Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag, world);
 
         entity.ifPresent(ent -> {
-            ent.setPos(spawnX, spawnY, spawnZ);
+            ent.setPosition(spawnPos);
             ent.applyRotation(BlockRotation.random(world.getRandom()));
             world.spawnEntity(ent);
         });

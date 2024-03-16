@@ -1,6 +1,7 @@
 package me.munchii.industrialreborn.recipe;
 
 import me.munchii.industrialreborn.blockentity.FluidTransposerBlockEntity;
+import me.munchii.industrialreborn.utils.Resources;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import reborncore.common.crafting.RebornFluidRecipe;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class FluidTransposerRecipe extends RebornFluidRecipe {
     public FluidTransposerRecipe(RebornRecipeType<FluidTransposerRecipe> type, List<RebornIngredient> ingredients, List<ItemStack> outputs, int power, int time, FluidInstance fluid) {
-        super(type, ingredients, outputs, power, time, fluid);
+        super(type, Resources.id("fluid_transposer"), ingredients, outputs, power, time, fluid);
     }
 
     @Override
