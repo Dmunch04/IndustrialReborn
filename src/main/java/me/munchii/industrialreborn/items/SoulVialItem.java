@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -126,7 +127,7 @@ public class SoulVialItem extends Item {
             Optional<NbtCompound> tag = EntityStorage.getEntityDataCompound(stack);
             tag.ifPresent(nbtCompound -> {
                 Optional<Entity> entity = EntityType.getEntityFromNbt(nbtCompound, world);
-                entity.ifPresent(ent -> tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", ent.getDisplayName().getString()).formatted(Formatting.GRAY)));
+                entity.ifPresent(ent -> tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", Objects.requireNonNull(ent.getDisplayName()).getString()).formatted(Formatting.GRAY)));
             });
         }
     }
