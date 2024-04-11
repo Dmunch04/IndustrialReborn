@@ -92,8 +92,10 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         if (getStored() > IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter && !experienceTank.isFull()) {
             if (slaughterTime >= totalSlaughterTime) {
-                killEntity(world);
-                useEnergy(IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter);
+                boolean didKill = killEntity(world);
+                if (didKill) {
+                    useEnergy(IndustrialRebornConfig.mobSlaughterEnergyPerSlaughter);
+                }
                 slaughterTime = 0;
             } else {
                 slaughterTime++;
@@ -101,7 +103,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         }
     }
 
-    private void killEntity(World world) {
+    private boolean killEntity(World world) {
         ServerWorld serverWorld = (ServerWorld) world;
         List<MobEntity> nearbyEntities = serverWorld.getEntitiesByClass(MobEntity.class, slaughterArea, entity -> entity.isAlive()
                 && !entity.isInvulnerable()
@@ -116,7 +118,11 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
             } else {
                 instantKill(world, entity);
             }
+
+            return true;
         }
+
+        return false;
     }
 
     private void damage(MobEntity entity, FakePlayer player) {
