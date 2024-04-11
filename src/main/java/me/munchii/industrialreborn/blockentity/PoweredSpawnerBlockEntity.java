@@ -63,19 +63,19 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         // NOTE: im unsure about the use of updateState. when i only had it inside the vial check (if-else below), it didn't work
 
         // if there's a vial, but the spawn type hasn't been set, set it, otherwise remove
-        /*if (!this.inventory.getStack(vialSlot).isEmpty() && !entityStore.hasStoredSoul()) {
+        if (!this.inventory.getStack(vialSlot).isEmpty() && !entityStore.hasStoredSoul()) {
             entityStore.storeSoul(this.inventory.getStack(vialSlot));
             updateState();
         } else if (this.inventory.getStack(vialSlot).isEmpty() && entityStore.hasStoredSoul()) {
             entityStore.emptyStore();
             updateState();
-        }*/
+        }
 
-        if (this.inventory.getStack(vialSlot).isEmpty()) {
+        /*if (this.inventory.getStack(vialSlot).isEmpty()) {
             entityStore.emptyStore();
         } else {
             entityStore.storeSoul(this.inventory.getStack(vialSlot));
-        }
+        }*/
 
         updateState();
 
