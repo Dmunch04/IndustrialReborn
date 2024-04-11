@@ -105,15 +105,12 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
         Random random = world.getRandom();
         double spawnX = pos.getX() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
-        //double spawnY = pos.getY() + random.nextInt(3) - 1;
         double spawnY = pos.getY() + 0.2;
         double spawnZ = pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
-        IndustrialReborn.LOGGER.error("AAABBB Trying to spawn from entity tag: " + entityTag.toString());
         Optional<Entity> optionalEntity = EntityType.getEntityFromNbt(entityTag, world);
-
         if (optionalEntity.isEmpty()) return false;
         Entity entity = optionalEntity.get();
 

@@ -84,8 +84,8 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
 
         if (getStored() > IndustrialRebornConfig.animalBabySeparatorEnergyPerSeparation) {
             if (separationTime >= totalSeparationTime) {
-                separateBaby();
-                useEnergy(IndustrialRebornConfig.animalBabySeparatorEnergyPerSeparation);
+                boolean didSeparate = separateBaby();
+                if (didSeparate) useEnergy(IndustrialRebornConfig.animalBabySeparatorEnergyPerSeparation);
                 separationTime = 0;
             } else {
                 separationTime++;
@@ -93,15 +93,18 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
         }
     }
 
-    public void separateBaby() {
+    public boolean separateBaby() {
         ServerWorld serverWorld = (ServerWorld) world;
         assert serverWorld != null;
-        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(1), entity -> entity.isAlive() && entity.isBaby() == !movingAdults);
+        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(0.5D), entity -> entity.isAlive() && entity.isBaby() == !movingAdults);
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalBabySeparatorMaxAnimalsInArea) {
             AnimalEntity entity = nearbyEntities.get(0);
             entity.setPosition(toCenterPos.toCenterPos());
+            return true;
         }
+
+        return false;
     }
 
     private void updateState() {
