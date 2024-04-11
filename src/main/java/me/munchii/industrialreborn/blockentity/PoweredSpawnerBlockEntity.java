@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.blockentity;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -8,6 +9,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -59,12 +63,18 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         // NOTE: im unsure about the use of updateState. when i only had it inside the vial check (if-else below), it didn't work
 
         // if there's a vial, but the spawn type hasn't been set, set it, otherwise remove
-        if (!this.inventory.getStack(vialSlot).isEmpty() && !entityStore.hasStoredSoul()) {
+        /*if (!this.inventory.getStack(vialSlot).isEmpty() && !entityStore.hasStoredSoul()) {
             entityStore.storeSoul(this.inventory.getStack(vialSlot));
             updateState();
         } else if (this.inventory.getStack(vialSlot).isEmpty() && entityStore.hasStoredSoul()) {
             entityStore.emptyStore();
             updateState();
+        }*/
+
+        if (this.inventory.getStack(vialSlot).isEmpty()) {
+            entityStore.emptyStore();
+        } else {
+            entityStore.storeSoul(this.inventory.getStack(vialSlot));
         }
 
         updateState();
@@ -72,9 +82,12 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         if (getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn) {
             if (entityStore.hasStoredSoul()) {
                 if (spawnTime == totalSpawnTime) {
-                    spawnEntity(world, pos, entityStore.entityTag, getRange());
-                    useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
-                    spawnTime = 0;
+                    boolean didSpawn = spawnEntity(world, pos, entityStore.entityTag, getRange());
+                    // if spawning failed, don't use energy or restart progress
+                    if (didSpawn) {
+                        useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
+                        spawnTime = 0;
+                    }
                 } else {
                     spawnTime++;
                 }
@@ -84,20 +97,37 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         }
     }
 
-    private static void spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
-        double spawnX = pos.getX() + world.random.nextBetween(-range, range);
-        double spawnY = pos.getY();// + 0.5;
-        double spawnZ = pos.getZ() + world.random.nextBetween(-range, range);
+    private static boolean spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
+        //double spawnX = pos.getX() + world.random.nextBetween(-range, range);
+        //double spawnY = pos.getY();// + 0.5;
+        //double spawnY = pos.getY() + 0.2;
+        //double spawnZ = pos.getZ() + world.random.nextBetween(-range, range);
+
+        Random random = world.getRandom();
+        double spawnX = pos.getX() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
+        //double spawnY = pos.getY() + random.nextInt(3) - 1;
+        double spawnY = pos.getY() + 0.2;
+        double spawnZ = pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
-        Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag, world);
+        IndustrialReborn.LOGGER.error("AAABBB Trying to spawn from entity tag: " + entityTag.toString());
+        Optional<Entity> optionalEntity = EntityType.getEntityFromNbt(entityTag, world);
 
-        entity.ifPresent(ent -> {
-            ent.setPos(spawnX, spawnY, spawnZ);
-            ent.applyRotation(BlockRotation.random(world.getRandom()));
-            world.spawnEntity(ent);
-        });
+        if (optionalEntity.isEmpty()) return false;
+        Entity entity = optionalEntity.get();
+
+        if (!world.getEntityCollisions(entity, entity.getBoundingBox()).isEmpty()) return false;
+
+        if (entity instanceof WardenEntity warden) {
+            warden.getBrain().remember(MemoryModuleType.DIG_COOLDOWN, null, 1200L);
+        }
+
+        //ent.setPos(spawnX, spawnY, spawnZ);
+        //entity.setPosition(pos.toCenterPos().add(world.random.nextBetween(-range + 1, range - 1), 0.2, world.random.nextBetween(-range + 1, range - 1)));
+        entity.setPosition(spawnX, spawnY, spawnZ);
+        entity.applyRotation(BlockRotation.random(random));
+        return world.spawnEntity(entity);
     }
 
     public int getRange() {
@@ -159,13 +189,12 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     @Override
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
-        // TODO: read entity store
+        entityStore.emptyStore();
     }
 
     @Override
     public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
-        // TODO: write entity store
     }
 
     @Override
@@ -220,6 +249,20 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
                 Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
                 entity.ifPresent(ent -> this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString());
             });
+        }
+
+        public void loadFromTag(String tag) {
+            if (tag.equals("null") || tag.isEmpty()) {
+                this.entityType = "";
+                this.entityTag = null;
+                return;
+            }
+
+            NbtCompound entityNbt = new NbtCompound();
+            entityNbt.putString("id", tag);
+            this.entityTag = entityNbt;
+            Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
+            entity.ifPresent(ent -> this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString());
         }
 
         public void emptyStore() {
