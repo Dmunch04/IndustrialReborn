@@ -8,6 +8,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
@@ -73,9 +75,11 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         if (getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn) {
             if (entityStore.hasStoredSoul()) {
                 if (spawnTime == totalSpawnTime) {
-                    spawnEntity(world, pos, entityStore.entityTag, getRange());
-                    useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
-                    spawnTime = 0;
+                    boolean didSpawn = spawnEntity(world, pos, entityStore.entityTag, getRange());
+                    if (didSpawn) {
+                        useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
+                        spawnTime = 0;
+                    }
                 } else {
                     spawnTime++;
                 }
@@ -85,22 +89,27 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         }
     }
 
-    private static void spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
-        Vec3d spawnPos = new BlockPos(
-                pos.getX() + world.random.nextBetween(-range, range),
-                pos.getY() - 1,
-                pos.getZ() + world.random.nextBetween(-range, range)
-        ).toCenterPos().add(0, 0.5, 0);
+    private static boolean spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
+        Random random = world.getRandom();
+        double spawnX = pos.getX() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
+        double spawnY = pos.getY() + 0.2;
+        double spawnZ = pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
-        Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag, world);
+        Optional<Entity> optionalEntity = EntityType.getEntityFromNbt(entityTag, world);
+        if (optionalEntity.isEmpty()) return false;
+        Entity entity = optionalEntity.get();
 
-        entity.ifPresent(ent -> {
-            ent.setPosition(spawnPos);
-            ent.applyRotation(BlockRotation.random(world.getRandom()));
-            world.spawnEntity(ent);
-        });
+        if (!world.getEntityCollisions(entity, entity.getBoundingBox()).isEmpty()) return false;
+
+        if (entity instanceof WardenEntity warden) {
+            warden.getBrain().remember(MemoryModuleType.DIG_COOLDOWN, null, 1200L);
+        }
+
+        entity.setPosition(spawnX, spawnY, spawnZ);
+        entity.applyRotation(BlockRotation.random(random));
+        return world.spawnEntity(entity);
     }
 
     public int getRange() {
@@ -162,6 +171,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     @Override
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
+        entityStore.emptyStore();
         // TODO: read entity store
     }
 
