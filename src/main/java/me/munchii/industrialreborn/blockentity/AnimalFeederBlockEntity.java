@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.blockentity;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -25,6 +26,7 @@ import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
@@ -83,6 +85,7 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
         assert serverWorld != null;
         List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, feedingArea.expand(1), LivingEntity::isAlive);
         nearbyEntities.removeIf(entity -> entity.age < entity.getBreedingAge() || getFeedingItem(entity).getLeft().isEmpty());
+        nearbyEntities.sort(Comparator.comparingInt(a -> a.age));
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalFeederMaxAnimalsInArea) {
             for (AnimalEntity firstParent : nearbyEntities) {
