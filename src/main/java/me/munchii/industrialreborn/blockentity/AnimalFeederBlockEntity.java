@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.blockentity;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -70,8 +71,10 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
 
         if (getStored() > IndustrialRebornConfig.animalFeederEnergyPerFeeding) {
             if (feedingTime >= totalFeedingTime) {
-                feedEntity();
-                useEnergy(IndustrialRebornConfig.animalFeederEnergyPerFeeding);
+                boolean didFeed = feedEntity();
+                if (didFeed) {
+                    useEnergy(IndustrialRebornConfig.animalFeederEnergyPerFeeding);
+                }
                 feedingTime = 0;
             } else {
                 feedingTime++;
@@ -79,11 +82,11 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
         }
     }
 
-    public void feedEntity() {
+    public boolean feedEntity() {
         ServerWorld serverWorld = (ServerWorld) world;
         assert serverWorld != null;
         List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, feedingArea.expand(1), LivingEntity::isAlive);
-        nearbyEntities.removeIf(entity -> entity.age < entity.getBreedingAge() || getFeedingItem(entity).getLeft().isEmpty());
+        nearbyEntities.removeIf(entity -> entity.getBreedingAge() > 0 || getFeedingItem(entity).getLeft().isEmpty());
         nearbyEntities.sort(Comparator.comparingInt(a -> a.age));
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalFeederMaxAnimalsInArea) {
@@ -108,10 +111,12 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
                     foodStack.decrement(1);
                     firstParent.lovePlayer(null);
                     secondParent.lovePlayer(null);
-                    return;
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 
     private Pair<ItemStack, Integer> getFeedingItem(AnimalEntity animal) {
