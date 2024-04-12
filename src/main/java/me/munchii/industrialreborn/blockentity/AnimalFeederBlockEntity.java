@@ -25,13 +25,14 @@ import reborncore.common.screen.BuiltScreenHandlerProvider;
 import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
+import techreborn.config.TechRebornConfig;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int feedingTime;
-    public final int totalFeedingTime = IndustrialRebornConfig.animalFeederTicksPerFeeding;
+    public int totalFeedingTime = IndustrialRebornConfig.animalFeederTicksPerFeeding;
 
     public final int feedingRadius = IndustrialRebornConfig.animalFeederRadius;
     public int extraRadius;
@@ -69,15 +70,15 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
 
         updateState();
 
-        if (getStored() > IndustrialRebornConfig.animalFeederEnergyPerFeeding) {
-            if (feedingTime >= totalFeedingTime) {
+        if (getStored() > getEuPerTick(IndustrialRebornConfig.animalFeederEnergyPerFeeding)) {
+            if (feedingTime >= getTotalFeedingTime()) {
                 boolean didFeed = feedEntity();
                 if (didFeed) {
-                    useEnergy(IndustrialRebornConfig.animalFeederEnergyPerFeeding);
+                    useEnergy(getEuPerTick(IndustrialRebornConfig.animalFeederEnergyPerFeeding));
                 }
                 feedingTime = 0;
             } else {
-                feedingTime++;
+                feedingTime += (int) Math.round(getSpeedMultiplier() / TechRebornConfig.overclockerSpeed) + 1;
             }
         }
     }
@@ -85,8 +86,8 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
     public boolean feedEntity() {
         ServerWorld serverWorld = (ServerWorld) world;
         assert serverWorld != null;
-        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, feedingArea.expand(1), LivingEntity::isAlive);
-        nearbyEntities.removeIf(entity -> entity.getBreedingAge() > 0 || getFeedingItem(entity).getLeft().isEmpty());
+        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, feedingArea.expand(0.5), LivingEntity::isAlive);
+        nearbyEntities.removeIf(entity -> entity.isBaby() || entity.getBreedingAge() > 0 || getFeedingItem(entity).getLeft().isEmpty());
         nearbyEntities.sort(Comparator.comparingInt(a -> a.age));
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalFeederMaxAnimalsInArea) {
@@ -134,7 +135,7 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
 
         final BlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof final BlockMachineBase blockMachineBase) {
-            boolean active = getStored() > IndustrialRebornConfig.animalFeederEnergyPerFeeding;
+            boolean active = getStored() > getEuPerTick(IndustrialRebornConfig.animalFeederEnergyPerFeeding);
             if (blockState.get(BlockMachineBase.ACTIVE) != active) {
                 blockMachineBase.setActive(active, world, pos);
             }
@@ -218,6 +219,6 @@ public class AnimalFeederBlockEntity extends GenericMachineBlockEntity implement
     }
 
     public void setTotalFeedingTime(final int totalFeedingTime) {
-
+        this.totalFeedingTime = totalFeedingTime;
     }
 }

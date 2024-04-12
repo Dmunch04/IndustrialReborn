@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,18 +84,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Dmunch04"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Dmunch04&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Dmunch04/IndustrialReborn.git",
-    "accountId": "8e490792-4ee9-43c8-9b01-8c9596b5f8ce"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Dmunch04/IndustrialReborn.git&quot;,
+    &quot;accountId&quot;: &quot;8e490792-4ee9-43c8-9b01-8c9596b5f8ce&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -312,6 +315,9 @@
       <workItem from="1710498492116" duration="11283000" />
       <workItem from="1710611386343" duration="4093000" />
       <workItem from="1712827944887" duration="2410000" />
+      <workItem from="1712830830335" duration="29000" />
+      <workItem from="1712830870118" duration="546000" />
+      <workItem from="1712910592970" duration="4799000" />
     </task>
     <servers />
   </component>

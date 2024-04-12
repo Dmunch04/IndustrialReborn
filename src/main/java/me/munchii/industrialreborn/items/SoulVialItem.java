@@ -1,5 +1,6 @@
 package me.munchii.industrialreborn.items;
 
+import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.utils.EntityCaptureUtils;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
@@ -14,10 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -49,10 +47,20 @@ public class SoulVialItem extends Item {
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem use");
+        return super.use(world, user, hand);
+    }
+
+    @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem {}", entity.getType().toString());
         if (user.getWorld().isClient) {
+            IndustrialReborn.LOGGER.error("AAABBB SoulVialItem 1");
             return ActionResult.FAIL;
         }
+
+        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem 2");
 
         Optional<ItemStack> itemStack = catchEntity(stack, entity);
         if (itemStack.isPresent()) {

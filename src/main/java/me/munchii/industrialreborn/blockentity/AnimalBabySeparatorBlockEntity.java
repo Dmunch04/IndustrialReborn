@@ -12,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import reborncore.common.blockentity.MachineBaseBlockEntity;
 import reborncore.common.blockentity.MultiblockWriter;
@@ -23,6 +24,7 @@ import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
@@ -98,11 +100,17 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
     public boolean separateBaby() {
         ServerWorld serverWorld = (ServerWorld) world;
         assert serverWorld != null;
-        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(0.5), entity -> entity.isAlive() && entity.isBaby() == !movingAdults);
+        List<AnimalEntity> nearbyEntities = serverWorld.getEntitiesByClass(AnimalEntity.class, fromArea.expand(0.3), entity -> entity.isAlive() && entity.isBaby() == !movingAdults);
+        // sort by distance to separator
+        nearbyEntities.sort((o1, o2) -> Double.compare(o1.getPos().distanceTo(getPos().toCenterPos()), o2.getPos().distanceTo(getPos().toCenterPos())));
 
         if (!nearbyEntities.isEmpty() && nearbyEntities.size() <= IndustrialRebornConfig.animalBabySeparatorMaxAnimalsInArea) {
-            AnimalEntity entity = nearbyEntities.get(0);
-            entity.setPosition(toCenterPos.toCenterPos());
+            // pick the one furthest away
+            AnimalEntity entity = nearbyEntities.get(nearbyEntities.size() - 1);
+
+            //entity.setPosition(toCenterPos.toCenterPos());
+            BlockPos pos = getPos().offset(getFacing());
+            entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             return true;
         }
 
@@ -166,11 +174,16 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
                 writer.add(i, 1, j, (world, pos) -> true, glass);
                 writer.add(i, 2, j, (world, pos) -> true, glass);
 
-                writer.add(-i, 0, j, (world, pos) -> true, greenGlass);
-                writer.add(-i, 1, j, (world, pos) -> true, greenGlass);
-                writer.add(-i, 2, j, (world, pos) -> true, greenGlass);
+                //writer.add(-i, 0, j, (world, pos) -> true, greenGlass);
+                //writer.add(-i, 1, j, (world, pos) -> true, greenGlass);
+                //writer.add(-i, 2, j, (world, pos) -> true, greenGlass);
             }
         }
+
+        //BlockPos behind = getPos().offset(getFacing()).north();
+        //writer.add(behind.getX() + 1, 0, behind.getZ(), (world, pos) -> true, greenGlass);
+        // TODO: ?
+        writer.add(-1, 0, 0, (world, pos) -> true, greenGlass);
     }
 
     @Override
