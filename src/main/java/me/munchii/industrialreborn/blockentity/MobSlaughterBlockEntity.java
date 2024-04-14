@@ -11,7 +11,11 @@ import net.fabricmc.fabric.api.tag.convention.v1.TagUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ExperienceOrbEntity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -36,8 +40,10 @@ import reborncore.common.util.RebornInventory;
 import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int slaughterTime = 0;
@@ -113,10 +119,11 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         if (!nearbyEntities.isEmpty()) {
             MobEntity entity = nearbyEntities.get(0);
             if (TagUtil.isIn(IndustrialTags.EntityTypes.MOB_SLAUGHTER_INSTANT_KILL_BLACKLIST, entity.getType())) {
-                FakePlayer player = FakePlayer.get(serverWorld);
-                damage(entity, player);
+                damage(world, entity);
+                pickupDrops(serverWorld);
             } else {
-                instantKill(world, entity);
+                instantKill(entity);
+                generateDrops(world, entity);
             }
 
             return true;
@@ -125,18 +132,64 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         return false;
     }
 
-    private void damage(MobEntity entity, FakePlayer player) {
+    private void pickupDrops(ServerWorld serverWorld) {
+        List<ItemEntity> nearbyItemEntities = serverWorld.getEntitiesByClass(ItemEntity.class, slaughterArea, null);
+
+        List<ItemStack> itemStacks = new ArrayList<>();
+
+        for (ItemEntity entity : nearbyItemEntities) {
+            ItemStack stack = entity.getStack();
+
+            if(!stack.isEmpty()) {
+                itemStacks.add(stack);
+            }
+
+            entity.remove(RemovalReason.DISCARDED);
+        }
+
+        List<ExperienceOrbEntity> nearbyExpierenceEntities = serverWorld.getEntitiesByClass(ExperienceOrbEntity.class, slaughterArea, null);
+
+        for (ExperienceOrbEntity entity : nearbyExpierenceEntities) {
+            int experience = entity.getExperienceAmount();
+
+            if (experience > 0) {
+                insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
+            }
+
+            entity.remove(RemovalReason.DISCARDED);
+        }
+
+        insertIntoInv(itemStacks);
+    }
+
+    private void generateDrops(World world, MobEntity entity) {
+        FakePlayer player = FakePlayer.get((ServerWorld) world);
+        LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
+
+        DamageSource damageSource = entity.getDamageSources().playerAttack(player);
+
+        LootContextParameterSet context = 
+        new LootContextParameterSet.Builder((ServerWorld) world)
+        .add(LootContextParameters.THIS_ENTITY, entity)
+        .add(LootContextParameters.ORIGIN, entity.getPos())
+        .add(LootContextParameters.DAMAGE_SOURCE, damageSource)
+        .add(LootContextParameters.KILLER_ENTITY, player)
+        .add(LootContextParameters.LAST_DAMAGE_PLAYER, player)
+        .build(LootContextTypes.ENTITY);
+        
+        insertIntoInv(table.generateLoot(context));
+
+        final int experience = entity.getXpToDrop();
+        insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
+    }
+
+    private void damage(World world, MobEntity entity) {
+        FakePlayer player = FakePlayer.get((ServerWorld) world);
+
         entity.damage(entity.getDamageSources().playerAttack(player), IndustrialRebornConfig.mobSlaughterAttackDamage);
     }
 
-    private void instantKill(World world, MobEntity entity) {
-        final int experience = entity.getXpToDrop();
-
-        LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
-        LootContextParameterSet.Builder context = new LootContextParameterSet.Builder((ServerWorld) world);
-        insertIntoInv(table.generateLoot(context.build(LootContextType.create().build())));
-        insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
-
+    private void instantKill(MobEntity entity) {
         entity.setHealth(0);
         entity.remove(Entity.RemovalReason.KILLED);
     }
