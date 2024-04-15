@@ -109,7 +109,7 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
             // pick the one furthest away
             AnimalEntity entity = nearbyEntities.get(nearbyEntities.size() - 1);
 
-            //entity.setPosition(toCenterPos.toCenterPos());
+            // place right behind machine instead
             BlockPos pos = getPos().offset(getFacing());
             entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             return true;
@@ -174,16 +174,9 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
                 writer.add(i, 0, j, (world, pos) -> true, glass);
                 writer.add(i, 1, j, (world, pos) -> true, glass);
                 writer.add(i, 2, j, (world, pos) -> true, glass);
-
-                //writer.add(-i, 0, j, (world, pos) -> true, greenGlass);
-                //writer.add(-i, 1, j, (world, pos) -> true, greenGlass);
-                //writer.add(-i, 2, j, (world, pos) -> true, greenGlass);
             }
         }
 
-        //BlockPos behind = getPos().offset(getFacing()).north();
-        //writer.add(behind.getX() + 1, 0, behind.getZ(), (world, pos) -> true, greenGlass);
-        // TODO: ?
         writer.add(-1, 0, 0, (world, pos) -> true, greenGlass);
     }
 

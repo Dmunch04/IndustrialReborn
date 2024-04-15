@@ -11,6 +11,7 @@ public class IndustrialReborn implements ModInitializer {
     // TODO: AnimalRancher block
     // TODO: Sewer block? (how to use the fertilizer? when greenhouse controller already exists in TR)
     // TODO: AnimalGrowthIncreaser block?
+    // TODO: datagen?
 
     public static final String MOD_ID = "industrialreborn";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
