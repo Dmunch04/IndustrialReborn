@@ -60,35 +60,6 @@ public class SoulVialItem extends Item {
         return super.use(world, user, hand);
     }
 
-    /*@Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem {}", entity.getType().toString());
-        if (user.getWorld().isClient) {
-            IndustrialReborn.LOGGER.error("AAABBB SoulVialItem 1");
-            return ActionResult.FAIL;
-        }
-
-        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem 2");
-
-        Optional<ItemStack> itemStack = catchEntity(stack, entity);
-        if (itemStack.isPresent()) {
-            ItemStack filledVial = itemStack.get();
-            ItemStack handStack = user.getStackInHand(hand);
-            if (handStack.isEmpty()) {
-                handStack.setCount(1);
-                user.setStackInHand(hand, filledVial);
-            } else {
-                if (!user.giveItemStack(filledVial)) {
-                    user.dropItem(filledVial, false);
-                }
-            }
-
-            return ActionResult.SUCCESS;
-        }
-
-        return ActionResult.FAIL;
-    }*/
-
     public static ActionResult useOnEntity(PlayerEntity player, World world, Hand hand, Entity entity, HitResult hitResult) {
         if (entity instanceof PlayerEntity || player.getWorld().isClient || !(entity instanceof LivingEntity livingEntity && livingEntity.isAlive())) {
             return ActionResult.PASS;

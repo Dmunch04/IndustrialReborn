@@ -46,12 +46,11 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public final int spawnRange = IndustrialRebornConfig.poweredSpawnerSpawnRange;
     public int extraRange = 0;
 
-    public final EntitySoulStore entityStore;
+    public final EntitySoulStore entityStore = new EntitySoulStore();
 
     public PoweredSpawnerBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.POWERED_SPAWNER, pos, state, "PoweredSpawner", IndustrialRebornConfig.poweredSpawnerMaxInput, IndustrialRebornConfig.poweredSpawnerMaxEnergy, IRContent.Machine.POWERED_SPAWNER.block, 1);
 
-        this.entityStore = new EntitySoulStore();
         this.inventory = new RebornInventory<>(2, "PoweredSpawnerBlockEntity", 1, this);
     }
 
@@ -100,22 +99,6 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         double spawnZ = pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
-
-        /*EntityType<?> entityType = Registries.ENTITY_TYPE.get(Identifier.tryParse(entityTag.getString("id")));
-        Entity aentity = entityType.create((ServerWorld) world, entityTag, t -> {}, pos, SpawnReason.SPAWNER, true, false);
-        if (aentity == null) return false;
-
-        if (!world.getEntityCollisions(aentity, aentity.getBoundingBox()).isEmpty()) return false;
-
-        if (aentity instanceof WardenEntity warden) {
-            warden.getBrain().remember(MemoryModuleType.DIG_COOLDOWN, null, 1200L);
-        }
-
-        aentity.setPos(spawnX, spawnY, spawnZ);
-        aentity.applyRotation(BlockRotation.random(random));
-
-        return world.spawnEntity(aentity);*/
-
 
         Optional<Entity> optionalEntity = EntityUtil.createFromNbt((ServerWorld) world, entityTag);
         if (optionalEntity.isEmpty()) return false;
