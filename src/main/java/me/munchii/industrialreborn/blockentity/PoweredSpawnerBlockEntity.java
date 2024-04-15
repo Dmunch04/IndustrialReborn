@@ -33,6 +33,7 @@ import reborncore.common.screen.BuiltScreenHandlerProvider;
 import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
+import techreborn.config.TechRebornConfig;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -77,14 +78,14 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
         if (getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn) {
             if (entityStore.hasStoredSoul()) {
-                if (spawnTime == totalSpawnTime) {
+                if (spawnTime >= totalSpawnTime) {
                     boolean didSpawn = spawnEntity(world, pos, entityStore.entityTag, getRange());
                     if (didSpawn) {
                         useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
                         spawnTime = 0;
                     }
                 } else {
-                    spawnTime++;
+                    spawnTime += (int) Math.round(getSpeedMultiplier() / TechRebornConfig.overclockerSpeed) + 1;
                 }
             } else if (spawnTime > 0) {
                 spawnTime = 0;

@@ -1,6 +1,5 @@
 package me.munchii.industrialreborn.blockentity;
 
-import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
@@ -11,9 +10,6 @@ import net.fabricmc.fabric.api.tag.convention.v1.TagUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -39,15 +35,14 @@ import reborncore.common.util.ItemUtils;
 import reborncore.common.util.RebornInventory;
 import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
+import techreborn.config.TechRebornConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int slaughterTime = 0;
-    public final int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
+    public int totalSlaughterTime = IndustrialRebornConfig.mobSlaughterTicksPerSlaughter;
 
     public final int slaughterRadius = IndustrialRebornConfig.mobSlaughterRadius;
     public int extraRadius = 0;
@@ -104,7 +99,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
                 }
                 slaughterTime = 0;
             } else {
-                slaughterTime++;
+                slaughterTime += (int) Math.round(getSpeedMultiplier() / TechRebornConfig.overclockerSpeed) + 1;
             }
         }
     }
@@ -118,12 +113,11 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
 
         if (!nearbyEntities.isEmpty()) {
             MobEntity entity = nearbyEntities.get(0);
+            FakePlayer player = FakePlayer.get(serverWorld);
             if (TagUtil.isIn(IndustrialTags.EntityTypes.MOB_SLAUGHTER_INSTANT_KILL_BLACKLIST, entity.getType())) {
-                damage(world, entity);
-                pickupDrops(serverWorld);
+                damage(entity, player);
             } else {
-                instantKill(entity);
-                generateDrops(world, entity);
+                instantKill(world, entity, player);
             }
 
             return true;
@@ -132,64 +126,26 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         return false;
     }
 
-    private void pickupDrops(ServerWorld serverWorld) {
-        List<ItemEntity> nearbyItemEntities = serverWorld.getEntitiesByClass(ItemEntity.class, slaughterArea, null);
-
-        List<ItemStack> itemStacks = new ArrayList<>();
-
-        for (ItemEntity entity : nearbyItemEntities) {
-            ItemStack stack = entity.getStack();
-
-            if(!stack.isEmpty()) {
-                itemStacks.add(stack);
-            }
-
-            entity.remove(RemovalReason.DISCARDED);
-        }
-
-        List<ExperienceOrbEntity> nearbyExpierenceEntities = serverWorld.getEntitiesByClass(ExperienceOrbEntity.class, slaughterArea, null);
-
-        for (ExperienceOrbEntity entity : nearbyExpierenceEntities) {
-            int experience = entity.getExperienceAmount();
-
-            if (experience > 0) {
-                insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
-            }
-
-            entity.remove(RemovalReason.DISCARDED);
-        }
-
-        insertIntoInv(itemStacks);
-    }
-
-    private void generateDrops(World world, MobEntity entity) {
-        FakePlayer player = FakePlayer.get((ServerWorld) world);
-        LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
-
-        DamageSource damageSource = entity.getDamageSources().playerAttack(player);
-
-        LootContextParameterSet context = 
-        new LootContextParameterSet.Builder((ServerWorld) world)
-        .add(LootContextParameters.THIS_ENTITY, entity)
-        .add(LootContextParameters.ORIGIN, entity.getPos())
-        .add(LootContextParameters.DAMAGE_SOURCE, damageSource)
-        .add(LootContextParameters.KILLER_ENTITY, player)
-        .add(LootContextParameters.LAST_DAMAGE_PLAYER, player)
-        .build(LootContextTypes.ENTITY);
-        
-        insertIntoInv(table.generateLoot(context));
-
-        final int experience = entity.getXpToDrop();
-        insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
-    }
-
-    private void damage(World world, MobEntity entity) {
-        FakePlayer player = FakePlayer.get((ServerWorld) world);
-
+    private void damage(MobEntity entity, FakePlayer player) {
         entity.damage(entity.getDamageSources().playerAttack(player), IndustrialRebornConfig.mobSlaughterAttackDamage);
     }
 
-    private void instantKill(MobEntity entity) {
+    private void instantKill(World world, MobEntity entity, FakePlayer player) {
+        final int experience = entity.getXpToDrop();
+        final DamageSource damageSource = entity.getDamageSources().playerAttack(player);
+
+        LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
+        LootContextParameterSet context = new LootContextParameterSet.Builder((ServerWorld) world)
+                .add(LootContextParameters.THIS_ENTITY, entity)
+                .add(LootContextParameters.ORIGIN, entity.getPos())
+                .add(LootContextParameters.DAMAGE_SOURCE, damageSource)
+                .add(LootContextParameters.KILLER_ENTITY, player)
+                .add(LootContextParameters.LAST_DAMAGE_PLAYER, player)
+                .build(LootContextTypes.ENTITY);
+
+        insertIntoInv(table.generateLoot(context));
+        insertFluid(FluidValue.fromMillibuckets(experience * IndustrialRebornConfig.mobSlaughterExperienceMultiplier));
+
         entity.setHealth(0);
         entity.remove(Entity.RemovalReason.KILLED);
     }
@@ -340,5 +296,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
         return totalSlaughterTime;
     }
 
-    public void setTotalSlaughterTime(int totalSlaughterTime) { }
+    public void setTotalSlaughterTime(final int totalSlaughterTime) {
+        this.totalSlaughterTime = totalSlaughterTime;
+    }
 }

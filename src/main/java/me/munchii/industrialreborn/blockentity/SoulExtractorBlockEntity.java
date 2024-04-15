@@ -30,12 +30,13 @@ import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
+import techreborn.config.TechRebornConfig;
 
 import java.util.List;
 
 public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int extractionTime = 0;
-    public final int totalExtractionTime = IndustrialRebornConfig.soulExtractorTicksPerExtraction;
+    public int totalExtractionTime = IndustrialRebornConfig.soulExtractorTicksPerExtraction;
 
     public final int extractionRadius = IndustrialRebornConfig.soulExtractorRadius;
     public int extraRadius = 0;
@@ -94,7 +95,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
                 if (res) useEnergy(IndustrialRebornConfig.soulExtractorEnergyPerExtraction);
                 extractionTime = 0;
             } else {
-                extractionTime++;
+                extractionTime += (int) Math.round(getSpeedMultiplier() / TechRebornConfig.overclockerSpeed) + 1;
             }
         }
     }
@@ -245,5 +246,7 @@ public class SoulExtractorBlockEntity extends GenericMachineBlockEntity implemen
         return totalExtractionTime;
     }
 
-    public void setTotalExtractionTime(int totalExtractionTime) { }
+    public void setTotalExtractionTime(final int totalExtractionTime) {
+        this.totalExtractionTime = totalExtractionTime;
+    }
 }

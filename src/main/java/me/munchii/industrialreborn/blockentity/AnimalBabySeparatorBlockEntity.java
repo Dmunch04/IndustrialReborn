@@ -23,13 +23,14 @@ import reborncore.common.screen.BuiltScreenHandlerProvider;
 import reborncore.common.screen.builder.ScreenHandlerBuilder;
 import reborncore.common.util.RebornInventory;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
+import techreborn.config.TechRebornConfig;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int separationTime;
-    public final int totalSeparationTime = IndustrialRebornConfig.animalBabySeparatorTicksPerSeparation;
+    public int totalSeparationTime = IndustrialRebornConfig.animalBabySeparatorTicksPerSeparation;
 
     public final int separationRadius = IndustrialRebornConfig.animalBabySeparatorRadius;
     public int extraRadius;
@@ -92,7 +93,7 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
                 }
                 separationTime = 0;
             } else {
-                separationTime++;
+                separationTime += (int) Math.round(getSpeedMultiplier() / TechRebornConfig.overclockerSpeed) + 1;
             }
         }
     }
@@ -220,7 +221,7 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
     }
 
     public void setTotalSeparationTime(final int totalSeparationTime) {
-
+        this.totalSeparationTime = totalSeparationTime;
     }
 
     public void setMovingAdults(boolean movingAdults) {
