@@ -39,8 +39,6 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
 
     private BlockPos fromCenterPos;
     private Box fromArea;
-    private BlockPos toCenterPos;
-    private Box toArea;
 
     public AnimalBabySeparatorBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.ANIMAL_BABY_SEPARATOR, pos, state, "AnimalBabySeparator", IndustrialRebornConfig.animalBabySeparatorMaxInput, IndustrialRebornConfig.animalBabySeparatorMaxEnergy, IRContent.Machine.ANIMAL_BABY_SEPARATOR.block, 0);
@@ -58,9 +56,6 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
         if (fromCenterPos == null) {
             fromCenterPos = pos.offset(getFacing().getOpposite(), getRadius() + 1);
         }
-        if (toCenterPos == null) {
-            toCenterPos = pos.offset(getFacing(), getRadius() + 1);
-        }
 
         if (fromArea == null) {
             fromArea = new Box(
@@ -70,16 +65,6 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
                     fromCenterPos.getX() + getRadius(),
                     fromCenterPos.getY() + 3,
                     fromCenterPos.getZ() + getRadius()
-            );
-        }
-        if (toArea == null) {
-            toArea = new Box(
-                    toCenterPos.getX() - getRadius(),
-                    toCenterPos.getY(),
-                    toCenterPos.getZ() - getRadius(),
-                    toCenterPos.getX() + getRadius(),
-                    toCenterPos.getY() + 3,
-                    toCenterPos.getZ() + getRadius()
             );
         }
 
@@ -138,18 +123,14 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
     public void addRange(int range) {
         extraRadius += range;
         fromCenterPos = null;
-        toCenterPos = null;
         fromArea = null;
-        toArea = null;
     }
 
     @Override
     public void addRangeMultiplier(float multiplier) {
         extraRadius += Math.round(getRadius() * multiplier);
         fromCenterPos = null;
-        toCenterPos = null;
         fromArea = null;
-        toArea = null;
     }
 
     @Override
@@ -189,9 +170,7 @@ public class AnimalBabySeparatorBlockEntity extends GenericMachineBlockEntity im
     public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         fromCenterPos = null;
-        toCenterPos = null;
         fromArea = null;
-        toArea = null;
     }
 
     @Override
