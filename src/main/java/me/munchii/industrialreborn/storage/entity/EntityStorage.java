@@ -45,4 +45,41 @@ public class EntityStorage {
 
         return Optional.of(entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE));
     }
+
+    public static class Legacy {
+        public static final String ENTITY_KEY = "Entity";
+
+        public static boolean LEGACY_hasStoredEntity(ItemStack stack) {
+            if (!stack.hasNbt()) {
+                return false;
+            }
+
+            NbtCompound nbt = stack.getNbt();
+            if (nbt == null || (!nbt.contains(IRNBTKeys.ENTITY_STORAGE))) {
+                return false;
+            }
+
+            NbtCompound entityNbt = nbt.getCompound(IRNBTKeys.ENTITY_STORAGE);
+            if (!entityNbt.contains(ENTITY_KEY)) {
+                return false;
+            }
+
+            return !entityNbt.getString(ENTITY_KEY).isEmpty();
+        }
+
+        public static Optional<NbtCompound> LEGACY_getStoredEntity(ItemStack stack) {
+            if (!hasStoredEntity(stack)) {
+                return Optional.empty();
+            }
+
+            NbtCompound entityNbt = stack.getNbt();
+
+            if (entityNbt == null) {
+                return Optional.empty();
+            }
+
+            String id = entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY);
+            return Optional.of(StoredEntityData.of(new Identifier(id)).getEntityTag());
+        }
+    }
 }

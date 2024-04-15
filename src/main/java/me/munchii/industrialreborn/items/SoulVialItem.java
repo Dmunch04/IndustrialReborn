@@ -116,6 +116,25 @@ public class SoulVialItem extends Item {
     }
 
     private static ActionResult releaseEntity(World world, ItemStack filledVial, BlockPos pos, Consumer<ItemStack> emptyVialSetter) {
+        if (EntityStorage.Legacy.LEGACY_hasStoredEntity(filledVial)) {
+            Optional<NbtCompound> entityTag = EntityStorage.Legacy.LEGACY_getStoredEntity(filledVial);
+            if (entityTag.isEmpty()) {
+                return ActionResult.FAIL;
+            }
+
+            Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag.get(), SpawnReason.MOB_SUMMONED);
+
+            entity.ifPresent(ent -> {
+                ent.readNbt(entityTag.get());
+                ent.setPosition(pos.toCenterPos().add(0, 0.5, 0));
+                ent.applyRotation(BlockRotation.random(world.getRandom()));
+                world.spawnEntity(ent);
+            });
+
+            emptyVialSetter.accept(IRContent.EMPTY_SOUL_VIAL.getDefaultStack());
+            return ActionResult.SUCCESS;
+        }
+
         if (EntityStorage.hasStoredEntity(filledVial)) {
             Optional<NbtCompound> entityTag = EntityStorage.getStoredEntity(filledVial);
             if (entityTag.isEmpty()) {
@@ -139,6 +158,21 @@ public class SoulVialItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (stack.getItem() == IRContent.FILLED_SOUL_VIAL.asItem() && EntityStorage.Legacy.LEGACY_hasStoredEntity(stack)) {
+            tooltip.add(Text.literal("If you see this it means your soul vial is being deprecated in the next version.").formatted(Formatting.RED));
+            tooltip.add(Text.literal("You should release the entity and capture it again to fix your vial.").formatted(Formatting.RED));
+            tooltip.add(Text.literal("If you don't, your soul vial will be unusable in future versions.").formatted(Formatting.RED));
+
+            Optional<NbtCompound> tag = EntityStorage.Legacy.LEGACY_getStoredEntity(stack);
+            tag.ifPresent(nbtCompound -> {
+                Optional<Entity> entity = EntityType.getEntityFromNbt(nbtCompound, world);
+                entity.ifPresent(ent -> {
+                    tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", EntityUtil.getNameToBeDisplayed(ent)).formatted(Formatting.GRAY));
+                });
+            });
+            return;
+        }
+
         if (stack.getItem() == IRContent.FILLED_SOUL_VIAL.asItem() && EntityStorage.hasStoredEntity(stack)) {
             Optional<NbtCompound> tag = EntityStorage.getStoredEntity(stack);
             tag.ifPresent(nbtCompound -> {

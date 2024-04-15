@@ -258,10 +258,8 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
             tag.ifPresent(nbtCompound -> {
                 this.entityTag = nbtCompound;
 
-                //Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
                 Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag, SpawnReason.SPAWNER);
                 entity.ifPresent(ent -> {
-                    //this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString();
                     this.entityType = EntityUtil.getNameToBeDisplayed(ent);
                 });
             });
