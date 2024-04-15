@@ -10,39 +10,29 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 
 public class EntityStorage {
-    public static final String ENTITY_KEY = "Entity";
-
     public static boolean hasStoredEntity(ItemStack stack) {
-        if (!stack.hasNbt()) {
-            return false;
-        }
+        if (!stack.hasNbt()) return false;
 
         NbtCompound nbt = stack.getNbt();
-        if (nbt == null || (!nbt.contains(IRNBTKeys.ENTITY_STORAGE))) {
-            return false;
-        }
+        if (nbt == null || (!nbt.contains(IRNBTKeys.ENTITY_STORAGE))) return false;
 
         NbtCompound entityNbt = nbt.getCompound(IRNBTKeys.ENTITY_STORAGE);
-        if (!entityNbt.contains(ENTITY_KEY)) {
-            return false;
-        }
-
-        return !entityNbt.getString(ENTITY_KEY).isEmpty();
+        return entityNbt != null && !entityNbt.isEmpty();
     }
 
-    public static void saveEntityData(ItemStack stack, LivingEntity entity) {
+    public static void saveEntity(ItemStack stack, LivingEntity entity) {
         NbtCompound nbt = stack.getOrCreateNbt();
         NbtCompound entityNbt = new NbtCompound();
         if (nbt.contains(IRNBTKeys.ENTITY_STORAGE)) {
             entityNbt = nbt.getCompound(IRNBTKeys.ENTITY_STORAGE);
         }
 
-        entityNbt.putString(ENTITY_KEY, Registries.ENTITY_TYPE.getKey(entity.getType()).get().getValue().toString());
+        entity.saveSelfNbt(entityNbt);
         nbt.put(IRNBTKeys.ENTITY_STORAGE, entityNbt);
-        stack.writeNbt(nbt);
+        stack.setNbt(stack.writeNbt(nbt));
     }
 
-    public static Optional<String> getEntityData(ItemStack stack) {
+    public static Optional<NbtCompound> getStoredEntity(ItemStack stack) {
         if (!hasStoredEntity(stack)) {
             return Optional.empty();
         }
@@ -53,21 +43,6 @@ public class EntityStorage {
             return Optional.empty();
         }
 
-        return Optional.of(entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY));
-    }
-
-    public static Optional<NbtCompound> getEntityDataCompound(ItemStack stack) {
-        if (!hasStoredEntity(stack)) {
-            return Optional.empty();
-        }
-
-        NbtCompound entityNbt = stack.getNbt();
-
-        if (entityNbt == null) {
-            return Optional.empty();
-        }
-
-        String id = entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE).getString(ENTITY_KEY);
-        return Optional.of(StoredEntityData.of(new Identifier(id)).getEntityTag());
+        return Optional.of(entityNbt.getCompound(IRNBTKeys.ENTITY_STORAGE));
     }
 }

@@ -133,6 +133,7 @@ public class MobSlaughterBlockEntity extends GenericMachineBlockEntity implement
     private void instantKill(World world, MobEntity entity, FakePlayer player) {
         final int experience = entity.getXpToDrop();
         final DamageSource damageSource = entity.getDamageSources().playerAttack(player);
+        // TODO: looting upgrades?
 
         LootTable table = Objects.requireNonNull(world.getServer()).getLootManager().getLootTable(entity.getLootTable());
         LootContextParameterSet context = new LootContextParameterSet.Builder((ServerWorld) world)

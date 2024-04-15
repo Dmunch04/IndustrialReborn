@@ -1,16 +1,19 @@
 package me.munchii.industrialreborn.items;
 
-import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.utils.EntityCaptureUtils;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
 import me.munchii.industrialreborn.utils.EntityUtil;
+import me.munchii.industrialreborn.utils.IndustrialTags;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.tag.convention.v1.TagUtil;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,12 +57,6 @@ public class SoulVialItem extends Item {
         return releaseEntity(context.getWorld(), context.getStack(), context.getBlockPos(), emptyVial -> player.setStackInHand(context.getHand(), emptyVial));
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        IndustrialReborn.LOGGER.error("AAABBB SoulVialItem use");
-        return super.use(world, user, hand);
-    }
-
     public static ActionResult useOnEntity(PlayerEntity player, World world, Hand hand, Entity entity, HitResult hitResult) {
         if (entity instanceof PlayerEntity || player.getWorld().isClient || !(entity instanceof LivingEntity livingEntity && livingEntity.isAlive())) {
             return ActionResult.PASS;
@@ -98,6 +95,10 @@ public class SoulVialItem extends Item {
             return Optional.empty();
         }
 
+        if (TagUtil.isIn(IndustrialTags.EntityTypes.SOUL_VIAL_BLACKLIST, entity.getType())) {
+            return Optional.empty();
+        }
+
         if (!entity.isAlive()) {
             return Optional.empty();
         }
@@ -108,7 +109,7 @@ public class SoulVialItem extends Item {
 
         soulVial.decrement(1);
         ItemStack filledVial = IRContent.FILLED_SOUL_VIAL.getDefaultStack();
-        EntityStorage.saveEntityData(filledVial, entity);
+        EntityStorage.saveEntity(filledVial, entity);
 
         entity.discard();
         return Optional.of(filledVial);
@@ -116,14 +117,15 @@ public class SoulVialItem extends Item {
 
     private static ActionResult releaseEntity(World world, ItemStack filledVial, BlockPos pos, Consumer<ItemStack> emptyVialSetter) {
         if (EntityStorage.hasStoredEntity(filledVial)) {
-            Optional<NbtCompound> entityTag = EntityStorage.getEntityDataCompound(filledVial);
+            Optional<NbtCompound> entityTag = EntityStorage.getStoredEntity(filledVial);
             if (entityTag.isEmpty()) {
                 return ActionResult.FAIL;
             }
 
-            Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag.get());
+            Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag.get(), SpawnReason.MOB_SUMMONED);
 
             entity.ifPresent(ent -> {
+                ent.readNbt(entityTag.get());
                 ent.setPosition(pos.toCenterPos().add(0, 0.5, 0));
                 ent.applyRotation(BlockRotation.random(world.getRandom()));
                 world.spawnEntity(ent);
@@ -138,10 +140,12 @@ public class SoulVialItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (stack.getItem() == IRContent.FILLED_SOUL_VIAL.asItem() && EntityStorage.hasStoredEntity(stack)) {
-            Optional<NbtCompound> tag = EntityStorage.getEntityDataCompound(stack);
+            Optional<NbtCompound> tag = EntityStorage.getStoredEntity(stack);
             tag.ifPresent(nbtCompound -> {
                 Optional<Entity> entity = EntityType.getEntityFromNbt(nbtCompound, world);
-                entity.ifPresent(ent -> tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", Objects.requireNonNull(ent.getDisplayName()).getString()).formatted(Formatting.GRAY)));
+                entity.ifPresent(ent -> {
+                    tooltip.add(Text.translatable("item.industrialreborn.filled_soul_vial.tooltip", EntityUtil.getNameToBeDisplayed(ent)).formatted(Formatting.GRAY));
+                });
             });
         }
     }

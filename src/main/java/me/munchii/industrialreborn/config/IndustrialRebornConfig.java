@@ -18,6 +18,9 @@ public class IndustrialRebornConfig {
     @Config(config = "machines", category = "powered_spawner", key = "PoweredSpawnerSpawnRange", comment = "Powered Spawner Spawn Range")
     public static int poweredSpawnerSpawnRange = 8;
 
+    @Config(config = "machines", category = "powered_spawner", key = "PoweredSpawnerExactCopy", comment = "Should Powered Spawner Spawn Exact Copies Of Provided Entity")
+    public static boolean poweredSpawnerExactCopy = false;
+
     @Config(config = "machines", category = "mob_slaughter", key = "MobSlaughterInput", comment = "Mob Slaughter Max Input (Energy per tick")
     public static int mobSlaughterMaxInput = 128;
 

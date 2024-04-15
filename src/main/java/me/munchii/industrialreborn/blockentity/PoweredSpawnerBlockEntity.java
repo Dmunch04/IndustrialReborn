@@ -5,12 +5,16 @@ import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
 import me.munchii.industrialreborn.utils.EntityUtil;
+import me.munchii.industrialreborn.utils.IndustrialTags;
+import net.fabricmc.fabric.api.tag.convention.v1.TagUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -21,6 +25,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +42,7 @@ import techreborn.config.TechRebornConfig;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider, IRangedBlockEntity {
     public int spawnTime = 0;
@@ -49,10 +55,14 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
     public final EntitySoulStore entityStore = new EntitySoulStore();
 
+    private boolean exactCopy;
+
     public PoweredSpawnerBlockEntity(BlockPos pos, BlockState state) {
         super(IRBlockEntities.POWERED_SPAWNER, pos, state, "PoweredSpawner", IndustrialRebornConfig.poweredSpawnerMaxInput, IndustrialRebornConfig.poweredSpawnerMaxEnergy, IRContent.Machine.POWERED_SPAWNER.block, 1);
 
         this.inventory = new RebornInventory<>(2, "PoweredSpawnerBlockEntity", 1, this);
+
+        this.exactCopy = IndustrialRebornConfig.poweredSpawnerExactCopy;
     }
 
     @Override
@@ -79,7 +89,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         if (getStored() > IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn) {
             if (entityStore.hasStoredSoul()) {
                 if (spawnTime >= totalSpawnTime) {
-                    boolean didSpawn = spawnEntity(world, pos, entityStore.entityTag, getRange());
+                    boolean didSpawn = spawnEntity(world, pos, entityStore.entityTag, getRange(), exactCopy);
                     if (didSpawn) {
                         useEnergy(IndustrialRebornConfig.poweredSpawnerEnergyPerSpawn);
                         spawnTime = 0;
@@ -93,7 +103,7 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         }
     }
 
-    private static boolean spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range) {
+    private static boolean spawnEntity(World world, BlockPos pos, NbtCompound entityTag, int range, boolean exactCopy) {
         Random random = world.getRandom();
         double spawnX = pos.getX() + (random.nextDouble() - random.nextDouble()) * (double) range + 0.5D;
         double spawnY = pos.getY() + 0.2;
@@ -101,19 +111,30 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
-        Optional<Entity> optionalEntity = EntityUtil.createFromNbt((ServerWorld) world, entityTag);
+        Optional<Entity> optionalEntity = EntityUtil.createFromNbt((ServerWorld) world, entityTag, SpawnReason.SPAWNER);
         if (optionalEntity.isEmpty()) return false;
         Entity entity = optionalEntity.get();
 
-        if (!world.getEntityCollisions(entity, entity.getBoundingBox()).isEmpty()) return false;
+        if (TagUtil.isIn(IndustrialTags.EntityTypes.POWERED_SPAWNER_BLACKLIST, entity.getType())) return false;
+
+        if (canEntitySpawn(world, entity)) return false;
 
         if (entity instanceof WardenEntity warden) {
             warden.getBrain().remember(MemoryModuleType.DIG_COOLDOWN, null, 1200L);
         }
 
+        if (exactCopy) {
+            entity.readNbt(entityTag);
+        }
+        entity.setUuid(UUID.randomUUID());
+
         entity.setPosition(spawnX, spawnY, spawnZ);
         entity.applyRotation(BlockRotation.random(random));
         return world.spawnEntity(entity);
+    }
+
+    private static boolean canEntitySpawn(World world, Entity entity) {
+        return !world.getEntityCollisions(entity, entity.getBoundingBox()).isEmpty() && !world.containsFluid(entity.getBoundingBox());
     }
 
     public int getRange() {
@@ -166,7 +187,10 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
     public static boolean filledVialFilter(ItemStack stack) {
         Item item = stack.getItem();
         if (item == IRContent.FILLED_SOUL_VIAL) {
-            return EntityStorage.hasStoredEntity(stack);
+            if (!EntityStorage.hasStoredEntity(stack)) return false;
+            Optional<NbtCompound> tag = EntityStorage.getStoredEntity(stack);
+            if (tag.isEmpty()) return false;
+            return !TagUtil.isIn(IndustrialTags.EntityTypes.POWERED_SPAWNER_BLACKLIST, Registries.ENTITY_TYPE.get(Identifier.tryParse(tag.get().getString("id"))));
         }
 
         return false;
@@ -230,12 +254,16 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
         }
 
         public void storeSoul(ItemStack soulVial) {
-            Optional<NbtCompound> tag = EntityStorage.getEntityDataCompound(soulVial);
+            Optional<NbtCompound> tag = EntityStorage.getStoredEntity(soulVial);
             tag.ifPresent(nbtCompound -> {
                 this.entityTag = nbtCompound;
 
-                Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
-                entity.ifPresent(ent -> this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString());
+                //Optional<Entity> entity = EntityType.getEntityFromNbt(this.entityTag, world);
+                Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag, SpawnReason.SPAWNER);
+                entity.ifPresent(ent -> {
+                    //this.entityType = Objects.requireNonNull(ent.getDisplayName()).getString();
+                    this.entityType = EntityUtil.getNameToBeDisplayed(ent);
+                });
             });
         }
 
