@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/utils/EntityUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalFeederBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/MobSlaughterBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/PoweredSpawnerBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/PoweredSpawnerBlockEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/items/SoulVialItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -317,7 +318,8 @@
       <workItem from="1712827944887" duration="2410000" />
       <workItem from="1712830830335" duration="29000" />
       <workItem from="1712830870118" duration="546000" />
-      <workItem from="1712910592970" duration="4799000" />
+      <workItem from="1712910592970" duration="7864000" />
+      <workItem from="1713181225401" duration="2089000" />
     </task>
     <servers />
   </component>

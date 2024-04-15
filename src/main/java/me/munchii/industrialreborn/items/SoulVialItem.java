@@ -4,6 +4,8 @@ import me.munchii.industrialreborn.IndustrialReborn;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.utils.EntityCaptureUtils;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
+import me.munchii.industrialreborn.utils.EntityUtil;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -14,8 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +33,10 @@ public class SoulVialItem extends Item {
 
     public SoulVialItem(boolean filled) {
         super(new Item.Settings().maxCount(filled ? 1 : 16));
+    }
+
+    public static void setup() {
+        UseEntityCallback.EVENT.register(SoulVialItem::useOnEntity);
     }
 
     @Override
@@ -52,7 +60,7 @@ public class SoulVialItem extends Item {
         return super.use(world, user, hand);
     }
 
-    @Override
+    /*@Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         IndustrialReborn.LOGGER.error("AAABBB SoulVialItem {}", entity.getType().toString());
         if (user.getWorld().isClient) {
@@ -79,6 +87,33 @@ public class SoulVialItem extends Item {
         }
 
         return ActionResult.FAIL;
+    }*/
+
+    public static ActionResult useOnEntity(PlayerEntity player, World world, Hand hand, Entity entity, HitResult hitResult) {
+        if (entity instanceof PlayerEntity || player.getWorld().isClient || !(entity instanceof LivingEntity livingEntity && livingEntity.isAlive())) {
+            return ActionResult.PASS;
+        }
+
+        ItemStack vialStack = player.getStackInHand(hand);
+        if (vialStack.isOf(IRContent.EMPTY_SOUL_VIAL)) {
+            Optional<ItemStack> itemStack = SoulVialItem.catchEntity(vialStack, (LivingEntity) entity);
+            if (itemStack.isPresent()) {
+                ItemStack filledVial = itemStack.get();
+                ItemStack handStack = player.getStackInHand(hand);
+                if (handStack.isEmpty()) {
+                    handStack.setCount(1);
+                    player.setStackInHand(hand, filledVial);
+                } else {
+                    if (!player.giveItemStack(filledVial)) {
+                        player.dropItem(filledVial, false);
+                    }
+                }
+
+                return ActionResult.SUCCESS;
+            }
+        }
+
+        return ActionResult.PASS;
     }
 
     private static Optional<ItemStack> catchEntity(ItemStack soulVial, LivingEntity entity) {
@@ -115,7 +150,7 @@ public class SoulVialItem extends Item {
                 return ActionResult.FAIL;
             }
 
-            Optional<Entity> entity = EntityType.getEntityFromNbt(entityTag.get(), world);
+            Optional<Entity> entity = EntityUtil.createFromNbt((ServerWorld) world, entityTag.get());
 
             entity.ifPresent(ent -> {
                 ent.setPosition(pos.toCenterPos().add(0, 0.5, 0));

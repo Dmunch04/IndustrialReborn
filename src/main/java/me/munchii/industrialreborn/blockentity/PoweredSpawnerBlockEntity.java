@@ -4,18 +4,22 @@ import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
 import me.munchii.industrialreborn.storage.entity.EntityStorage;
+import me.munchii.industrialreborn.utils.EntityUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -97,7 +101,23 @@ public class PoweredSpawnerBlockEntity extends GenericMachineBlockEntity impleme
 
         // what if the surface area around the mob spawner isn't flat? they will spawn in the air. is that fine?
 
-        Optional<Entity> optionalEntity = EntityType.getEntityFromNbt(entityTag, world);
+        /*EntityType<?> entityType = Registries.ENTITY_TYPE.get(Identifier.tryParse(entityTag.getString("id")));
+        Entity aentity = entityType.create((ServerWorld) world, entityTag, t -> {}, pos, SpawnReason.SPAWNER, true, false);
+        if (aentity == null) return false;
+
+        if (!world.getEntityCollisions(aentity, aentity.getBoundingBox()).isEmpty()) return false;
+
+        if (aentity instanceof WardenEntity warden) {
+            warden.getBrain().remember(MemoryModuleType.DIG_COOLDOWN, null, 1200L);
+        }
+
+        aentity.setPos(spawnX, spawnY, spawnZ);
+        aentity.applyRotation(BlockRotation.random(random));
+
+        return world.spawnEntity(aentity);*/
+
+
+        Optional<Entity> optionalEntity = EntityUtil.createFromNbt((ServerWorld) world, entityTag);
         if (optionalEntity.isEmpty()) return false;
         Entity entity = optionalEntity.get();
 

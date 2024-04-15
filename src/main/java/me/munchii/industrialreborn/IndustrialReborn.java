@@ -1,6 +1,7 @@
 package me.munchii.industrialreborn;
 
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
+import me.munchii.industrialreborn.items.SoulVialItem;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class IndustrialReborn implements ModInitializer {
         new Configuration(IndustrialRebornConfig.class, MOD_ID);
 
         RegistryManager.register();
+
+        SoulVialItem.setup();
 
         LOGGER.info("IndustrialReborn initialized");
     }
