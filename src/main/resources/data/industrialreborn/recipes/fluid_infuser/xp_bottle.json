@@ -1,5 +1,5 @@
 {
-  "type": "industrialreborn:fluid_transposer",
+  "type": "industrialreborn:fluid_infuser",
   "power": 128,
   "time": 100,
   "tank": {

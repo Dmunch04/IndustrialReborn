@@ -3,7 +3,6 @@ package me.munchii.industrialreborn.blockentity;
 import me.munchii.industrialreborn.config.IndustrialRebornConfig;
 import me.munchii.industrialreborn.init.IRBlockEntities;
 import me.munchii.industrialreborn.init.IRContent;
-import me.munchii.industrialreborn.init.IRFluids;
 import me.munchii.industrialreborn.init.IRRecipes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,18 +21,18 @@ import reborncore.common.util.RebornInventory;
 import reborncore.common.util.Tank;
 import techreborn.blockentity.machine.GenericMachineBlockEntity;
 
-public class FluidTransposerBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
+public class FluidInfuserBlockEntity extends GenericMachineBlockEntity implements BuiltScreenHandlerProvider {
     public final Tank tank;
     private int ticksSinceLastChange;
 
-    public FluidTransposerBlockEntity(BlockPos pos, BlockState state) {
-        super(IRBlockEntities.FLUID_TRANSPOSER, pos, state, "FluidTransposer", IndustrialRebornConfig.fluidTransposerMaxInput, IndustrialRebornConfig.fluidTransposerMaxEnergy, IRContent.Machine.FLUID_TRANSPOSER.block, 4);
+    public FluidInfuserBlockEntity(BlockPos pos, BlockState state) {
+        super(IRBlockEntities.FLUID_INFUSER, pos, state, "FluidInfuser", IndustrialRebornConfig.fluidInfuserMaxInput, IndustrialRebornConfig.fluidInfuserMaxEnergy, IRContent.Machine.FLUID_INFUSER.block, 4);
 
         final int[] inputs = new int[] { 0, 1 };
         final int[] outputs = new int[] { 2 };
-        this.inventory = new RebornInventory<MachineBaseBlockEntity>(5, "FluidTransposerBlockEntity", 64, this);
-        this.crafter = new RecipeCrafter(IRRecipes.FLUID_TRANSPOSER, this, 1, 1, this.inventory, inputs, outputs);
-        this.tank = new Tank("FluidTransposerBlockEntity", FluidValue.BUCKET.multiply(16), this);
+        this.inventory = new RebornInventory<MachineBaseBlockEntity>(5, "FluidInfuserBlockEntity", 64, this);
+        this.crafter = new RecipeCrafter(IRRecipes.FLUID_INFUSER, this, 1, 1, this.inventory, inputs, outputs);
+        this.tank = new Tank("FluidInfuserBlockEntity", FluidValue.BUCKET.multiply(16), this);
         this.ticksSinceLastChange = 0;
     }
 
@@ -75,7 +74,7 @@ public class FluidTransposerBlockEntity extends GenericMachineBlockEntity implem
 
     @Override
     public BuiltScreenHandler createScreenHandler(int syncID, PlayerEntity player) {
-        return new ScreenHandlerBuilder("fluidtransposer").player(player.getInventory()).inventory().hotbar().addInventory()
+        return new ScreenHandlerBuilder("fluid_infuser").player(player.getInventory()).inventory().hotbar().addInventory()
                 .blockEntity(this).fluidSlot(1, 34, 35).slot(0, 84, 43).outputSlot(2, 126, 43)
                 .outputSlot(3, 34, 55).energySlot(4, 8, 72)
                 .sync(tank).syncEnergyValue().syncCrafterValue().addInventory().create(this, syncID);

@@ -1,0 +1,19 @@
+{
+  "type": "industrialreborn:fluid_infuser",
+  "power": 512,
+  "time": 300,
+  "tank": {
+    "fluid": "industrialreborn:soul_essence",
+    "amount": 1000
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:experience_bottle"
+    }
+  ]
+}

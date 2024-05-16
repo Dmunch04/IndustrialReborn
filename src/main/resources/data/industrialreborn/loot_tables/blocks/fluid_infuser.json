@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "industrialreborn:fluid_transposer"
+          "name": "industrialreborn:fluid_infuser"
         }
       ],
       "conditions": [

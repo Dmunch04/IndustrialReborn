@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import reborncore.api.blockentity.IUpgrade;
 import techreborn.blocks.GenericMachineBlock;
 import techreborn.items.UpgradeItem;
-import techreborn.utils.InitUtils;
 
 import java.util.Locale;
 
@@ -23,9 +22,10 @@ public class IRContent {
         POWERED_SPAWNER(new GenericMachineBlock(GuiType.POWERED_SPAWNER, PoweredSpawnerBlockEntity::new)),
         MOB_SLAUGHTER(new GenericMachineBlock(GuiType.MOB_SLAUGHTER, MobSlaughterBlockEntity::new)),
         SOUL_EXTRACTOR(new GenericMachineBlock(GuiType.SOUL_EXTRACTOR, SoulExtractorBlockEntity::new)),
-        FLUID_TRANSPOSER(new GenericMachineBlock(GuiType.FLUID_TRANSPOSER, FluidTransposerBlockEntity::new)),
+        FLUID_INFUSER(new GenericMachineBlock(GuiType.FLUID_INFUSER, FluidInfuserBlockEntity::new)),
         ANIMAL_FEEDER(new GenericMachineBlock(GuiType.ANIMAL_FEEDER, AnimalFeederBlockEntity::new)),
-        ANIMAL_BABY_SEPARATOR(new GenericMachineBlock(GuiType.ANIMAL_BABY_SEPARATOR, AnimalBabySeparatorBlockEntity::new));
+        ANIMAL_BABY_SEPARATOR(new GenericMachineBlock(GuiType.ANIMAL_BABY_SEPARATOR, AnimalBabySeparatorBlockEntity::new)),
+        AUTO_ENCHANTER(new GenericMachineBlock(GuiType.AUTO_ENCHANTER, AutoEnchanterBlockEntity::new));
 
         public final String name;
         public final Block block;

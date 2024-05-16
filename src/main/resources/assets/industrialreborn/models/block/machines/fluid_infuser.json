@@ -3,6 +3,6 @@
   "textures": {
     "top": "techreborn:block/machines/tier0_machines/machine_top",
     "side": "techreborn:block/machines/tier0_machines/machine_side",
-    "front": "industrialreborn:block/machines/fluid_transposer_front_off"
+    "front": "industrialreborn:block/machines/fluid_infuser_front_off"
   }
 }

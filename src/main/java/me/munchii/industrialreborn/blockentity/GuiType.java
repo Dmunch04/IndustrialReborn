@@ -30,9 +30,10 @@ public class GuiType<T extends BlockEntity> implements IMachineGuiHandler {
     public static final GuiType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register("powered_spawner");
     public static final GuiType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register("mob_slaughter");
     public static final GuiType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register("soul_extractor");
-    public static final GuiType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register("fluid_transposer");
+    public static final GuiType<FluidInfuserBlockEntity> FLUID_INFUSER = register("fluid_infuser");
     public static final GuiType<AnimalFeederBlockEntity> ANIMAL_FEEDER = register("animal_feeder");
     public static final GuiType<AnimalBabySeparatorBlockEntity> ANIMAL_BABY_SEPARATOR = register("animal_baby_separator");
+    public static final GuiType<AutoEnchanterBlockEntity> AUTO_ENCHANTER = register("auto_enchanter");
 
     private static <T extends BlockEntity> GuiType<T> register(String id) {
         return register(Resources.id(id));

@@ -25,9 +25,10 @@ public class IRBlockEntities {
     public static final BlockEntityType<PoweredSpawnerBlockEntity> POWERED_SPAWNER = register(PoweredSpawnerBlockEntity::new, "powered_spawner", IRContent.Machine.POWERED_SPAWNER);
     public static final BlockEntityType<MobSlaughterBlockEntity> MOB_SLAUGHTER = register(MobSlaughterBlockEntity::new, "mob_slaughter", IRContent.Machine.MOB_SLAUGHTER);
     public static final BlockEntityType<SoulExtractorBlockEntity> SOUL_EXTRACTOR = register(SoulExtractorBlockEntity::new, "soul_extractor", IRContent.Machine.SOUL_EXTRACTOR);
-    public static final BlockEntityType<FluidTransposerBlockEntity> FLUID_TRANSPOSER = register(FluidTransposerBlockEntity::new, "fluid_transposer", IRContent.Machine.FLUID_TRANSPOSER);
+    public static final BlockEntityType<FluidInfuserBlockEntity> FLUID_INFUSER = register(FluidInfuserBlockEntity::new, "fluid_infuser", IRContent.Machine.FLUID_INFUSER);
     public static final BlockEntityType<AnimalFeederBlockEntity> ANIMAL_FEEDER = register(AnimalFeederBlockEntity::new, "animal_feeder", IRContent.Machine.ANIMAL_FEEDER);
     public static final BlockEntityType<AnimalBabySeparatorBlockEntity> ANIMAL_BABY_SEPARATOR = register(AnimalBabySeparatorBlockEntity::new, "animal_baby_separator", IRContent.Machine.ANIMAL_BABY_SEPARATOR);
+    public static final BlockEntityType<AutoEnchanterBlockEntity> AUTO_ENCHANTER = register(AutoEnchanterBlockEntity::new, "auto_enchanter", IRContent.Machine.AUTO_ENCHANTER);
 
     public static <T extends BlockEntity> BlockEntityType<T> register(BiFunction<BlockPos, BlockState, T> supplier, String name, ItemConvertible... items) {
         return register(supplier, name, Arrays.stream(items).map(itemConvertible -> Block.getBlockFromItem(itemConvertible.asItem())).toArray(Block[]::new));

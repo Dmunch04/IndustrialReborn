@@ -44,7 +44,7 @@ public class RegistryManager {
     private static void registerRecipes() {
         // force load class
         //noinspection ResultOfMethodCallIgnored
-        IRRecipes.FLUID_TRANSPOSER.hashCode();
+        IRRecipes.FLUID_INFUSER.hashCode();
     }
 
     private static <I extends Item> I registerItem(String name, I item) {

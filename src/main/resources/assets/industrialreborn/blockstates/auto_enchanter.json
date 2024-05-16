@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,active=false": { "model": "industrialreborn:block/machines/auto_enchanter" },
+    "facing=south,active=false": { "model": "industrialreborn:block/machines/auto_enchanter", "y": 180 },
+    "facing=west,active=false":  { "model": "industrialreborn:block/machines/auto_enchanter", "y": 270 },
+    "facing=east,active=false":  { "model": "industrialreborn:block/machines/auto_enchanter", "y": 90 },
+    "facing=north,active=true": { "model": "industrialreborn:block/machines/auto_enchanter_on" },
+    "facing=south,active=true": { "model": "industrialreborn:block/machines/auto_enchanter_on", "y": 180 },
+    "facing=west,active=true":  { "model": "industrialreborn:block/machines/auto_enchanter_on", "y": 270 },
+    "facing=east,active=true":  { "model": "industrialreborn:block/machines/auto_enchanter_on", "y": 90 }
+  }
+}

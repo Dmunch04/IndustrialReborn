@@ -5,10 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d9035ec-0e43-41fb-8199-9b91fdb2eafc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AutoEnchanterBlockEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiAutoEnchanter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/blockstates/auto_enchanter.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/auto_enchanter.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/auto_enchanter_on.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/auto_enchanter.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/loot_tables/blocks/auto_enchanter.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/fluid_infuser/soul_infused_ingot.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/AnimalBabySeparatorBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/IndustrialReborn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/RegistryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/FluidTransposerBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/FluidInfuserBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/blockentity/GuiType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/ClientGuiType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiFluidTransposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/client/gui/GuiFluidInfuser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/config/IndustrialRebornConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRBlockEntities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRRecipes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/init/IRRecipes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/recipe/FluidTransposerRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/recipe/FluidInfuserRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/recipe/FluidTransposerRecipeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/munchii/industrialreborn/recipe/FluidInfuserRecipeFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/blockstates/fluid_transposer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/blockstates/fluid_infuser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_transposer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_infuser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_transposer_on.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/block/machines/fluid_infuser_on.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/fluid_transposer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/models/item/fluid_infuser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_transposer_front_off.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_infuser_front_off.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_transposer_front_on.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/industrialreborn/textures/block/machines/fluid_infuser_front_on.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/loot_tables/blocks/fluid_transposer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/loot_tables/blocks/fluid_infuser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/fluid_transposer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/crafting_table/machine/fluid_infuser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/fluid_transposer/xp_bottle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/industrialreborn/recipes/fluid_infuser/xp_bottle.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,8 +315,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -315,7 +343,11 @@
       <workItem from="1712830830335" duration="29000" />
       <workItem from="1712830870118" duration="546000" />
       <workItem from="1712910592970" duration="7864000" />
-      <workItem from="1713181225401" duration="16784000" />
+      <workItem from="1713181225401" duration="16785000" />
+      <workItem from="1713263635635" duration="55000" />
+      <workItem from="1713514239047" duration="1766000" />
+      <workItem from="1715098633819" duration="1934000" />
+      <workItem from="1715877489776" duration="3987000" />
     </task>
     <servers />
   </component>

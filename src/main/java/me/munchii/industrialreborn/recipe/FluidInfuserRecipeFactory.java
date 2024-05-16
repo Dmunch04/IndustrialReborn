@@ -10,10 +10,10 @@ import reborncore.common.fluid.container.FluidInstance;
 
 import java.util.List;
 
-public class FluidTransposerRecipeFactory implements RebornFluidRecipeSerde.SimpleFluidRecipeFactory<FluidTransposerRecipe> {
+public class FluidInfuserRecipeFactory implements RebornFluidRecipeSerde.SimpleFluidRecipeFactory<FluidInfuserRecipe> {
     // why is this needed when in TR 5.8.7 (their own source code), they use the way I do in 1.20.4?
     @Override
-    public FluidTransposerRecipe create(RebornRecipeType<FluidTransposerRecipe> type, Identifier id, List<RebornIngredient> ingredients, List<ItemStack> outputs, int power, int time, @NotNull FluidInstance fluid) {
-        return new FluidTransposerRecipe(type, ingredients, outputs, power, time, fluid);
+    public FluidInfuserRecipe create(RebornRecipeType<FluidInfuserRecipe> type, Identifier id, List<RebornIngredient> ingredients, List<ItemStack> outputs, int power, int time, @NotNull FluidInstance fluid) {
+        return new FluidInfuserRecipe(type, ingredients, outputs, power, time, fluid);
     }
 }
